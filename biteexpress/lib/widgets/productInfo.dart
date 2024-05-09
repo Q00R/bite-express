@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import '../classes/product.dart';
+import './relatedProductsList.dart';
 
 class ProductInfo extends StatelessWidget {
   final Product product;
@@ -10,23 +11,30 @@ class ProductInfo extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.all(20.0),
       child: Column(
+        mainAxisSize: MainAxisSize.min,
+        mainAxisAlignment: MainAxisAlignment.center,
         children: [
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Text(
-                product.title,
-                style: const TextStyle(
-                  fontSize: 20,
-                  fontWeight: FontWeight.bold,
+              Flexible(
+                child: Text(
+                  product.title,
+                  style: const TextStyle(
+                    fontSize: 20,
+                    fontWeight: FontWeight.bold,
+                  ),
                 ),
               ),
-              Text(
-                'EGP ${product.price}',
-                style: const TextStyle(
-                  fontSize: 18,
-                  color: Color.fromARGB(255, 255, 85, 0),
-                  fontWeight: FontWeight.w500,
+              Align(
+                alignment: Alignment.topRight,
+                child: Text(
+                  'EGP ${product.price}',
+                  style: const TextStyle(
+                    fontSize: 18,
+                    color: Color.fromARGB(255, 255, 85, 0),
+                    fontWeight: FontWeight.w500,
+                  ),
                 ),
               ),
             ],
@@ -35,35 +43,82 @@ class ProductInfo extends StatelessWidget {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Text(
+              Align(
+                alignment: Alignment.centerLeft,
+                child: Text(
+                  'Vendor: ${product.createdVendor}',
+                  style: const TextStyle(
+                    fontSize: 16,
+                    fontWeight: FontWeight.normal,
+                  ),
+                ),
+              ),
+              const Align(
+                alignment: Alignment.centerRight,
+                child: Text(
+                  'In Stock',
+                  style: TextStyle(
+                    fontSize: 15,
+                    color: Color.fromARGB(255, 0, 167, 17),
+                    fontWeight: FontWeight.normal,
+                  ),
+                ),
+              ),
+            ],
+          ),
+          const SizedBox(height: 10),
+          const Divider(
+            color: Colors.grey,
+          ),
+          const SizedBox(height: 10),
+          const Align(
+            alignment: Alignment.centerLeft,
+            child: Text(
+              'Description',
+              style: TextStyle(
+                fontSize: 18,
+                color: Colors.black,
+                fontWeight: FontWeight.w500,
+              ),
+            ),
+          ),
+          Flexible(
+            child: Align(
+              alignment: Alignment.topLeft,
+              child: Text(
                 product.description,
                 style: const TextStyle(
                   fontSize: 16,
                   fontWeight: FontWeight.normal,
                 ),
               ),
-              const Text(
-                'In Stock',
-                style: TextStyle(
-                  fontSize: 15,
-                  color: Color.fromARGB(255, 0, 167, 17),
-                  fontWeight: FontWeight.normal,
-                ),
-              ),
-            ],
+            ),
           ),
-          // add the product vendor in a text widget.
-          const SizedBox(height: 20),
-          Align(
+          const SizedBox(height: 10),
+          const Divider(
+            color: Colors.grey,
+          ),
+          const SizedBox(height: 10),
+          const Align(
             alignment: Alignment.centerLeft,
             child: Text(
-              'Vendor: ${product.createdVendor}',
-              style: const TextStyle(
-                fontSize: 16,
-                fontWeight: FontWeight.normal,
+              'Related Products',
+              style: TextStyle(
+                fontSize: 18,
+                color: Colors.black,
+                fontWeight: FontWeight.w500,
               ),
             ),
           ),
+          RelatedProductsList(
+            productId: product.productId,
+            subCategory: product.subcategory,
+          ),
+          const SizedBox(height: 10),
+          const Divider(
+            color: Colors.grey,
+          ),
+          const SizedBox(height: 10),
         ],
       ),
     );

@@ -62,13 +62,14 @@ class ProductCard extends StatelessWidget {
                     ],
                   ),
                 ),
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 8.0),
-                  child: Container(
-                    width: double.infinity,
+                Flexible(
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 8.0),
                     child: Text(
-                      product.title,
-                      textAlign: TextAlign.left, // Add this line
+                      product.title.length > 30
+                          ? '${product.title.substring(0, 30)}...'
+                          : product.title,
+                      textAlign: TextAlign.left,
                       style: const TextStyle(
                         color: Colors.black,
                         fontSize: 14,

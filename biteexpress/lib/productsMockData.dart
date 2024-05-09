@@ -105,8 +105,9 @@ final Map<String, dynamic> products = {
     }
   },
   "productId2": {
-    "title": "Organic Apples",
-    "description": "Fresh, organic apples bursting with flavor.",
+    "title": "Organic Apples spliced with banana genes",
+    "description":
+        "Fresh, organic apples bursting with flavor. And this time we are creating a special long description to test the text overflow feature of the app.",
     "category": "Fruits & Vegetables",
     "subCategory": "Fresh Fruits",
     "price": "3.99",

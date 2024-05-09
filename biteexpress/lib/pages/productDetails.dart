@@ -3,57 +3,121 @@ import '../classes/product.dart';
 import '../widgets/productInfo.dart';
 import '../widgets/productComments.dart';
 
-class ProductDetailsPage extends StatelessWidget {
+class ProductDetailsPage extends StatefulWidget {
   final Product product;
   const ProductDetailsPage({Key? key, required this.product}) : super(key: key);
 
   @override
+  _ProductDetailsPageState createState() => _ProductDetailsPageState();
+}
+
+class _ProductDetailsPageState extends State<ProductDetailsPage> {
+  final ScrollController _scrollController = ScrollController();
+  late double _maxScrollExtent;
+
+  @override
+  void initState() {
+    super.initState();
+    _scrollController.addListener(_scrollListener);
+  }
+
+  @override
+  void dispose() {
+    _scrollController.removeListener(_scrollListener);
+    _scrollController.dispose();
+    super.dispose();
+  }
+
+  void _scrollListener() {
+    if (_scrollController.offset > _maxScrollExtent) {
+      _scrollController.jumpTo(_maxScrollExtent);
+    }
+  }
+
+  @override
   Widget build(BuildContext context) {
     return DefaultTabController(
-      length: 3,
+      length: 2,
       child: Scaffold(
-        body: NestedScrollView(
-            headerSliverBuilder:
-                (BuildContext context, bool innerBoxIsScrolled) {
-              return <Widget>[
-                SliverAppBar(
-                  expandedHeight: 300.0,
-                  floating: false,
-                  pinned: true,
-                  stretch: true,
-                  flexibleSpace: FlexibleSpaceBar(
+        body: CustomScrollView(
+          controller: _scrollController,
+          slivers: <Widget>[
+            SliverAppBar(
+              expandedHeight: 300.0,
+              floating: false,
+              pinned: true,
+              stretch: true,
+              flexibleSpace: LayoutBuilder(
+                builder: (BuildContext context, BoxConstraints constraints) {
+                  _maxScrollExtent =
+                      constraints.biggest.height - kToolbarHeight + 250;
+                  return FlexibleSpaceBar(
                     centerTitle: true,
                     collapseMode: CollapseMode.parallax,
-
-                    // background: Image.network(
-                    //   "https://images.pexels.com/photos/417173/pexels-photo-417173.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260",
-                    //   fit: BoxFit.cover,
-                    // )
                     background: Image.asset(
-                      "../../assets/images/${product.image}",
+                      "../../assets/images/${widget.product.image}",
                       fit: BoxFit.cover,
                     ),
-                  ),
+                  );
+                },
+              ),
+            ),
+            SliverPersistentHeader(
+              delegate: _SliverAppBarDelegate(
+                const TabBar(
+                  indicatorSize: TabBarIndicatorSize.label,
+                  labelColor: Color.fromARGB(255, 255, 102, 0),
+                  unselectedLabelColor: Colors.grey,
+                  tabs: _tabs,
                 ),
-                SliverPersistentHeader(
-                  delegate: _SliverAppBarDelegate(
-                    const TabBar(
-                      indicatorSize: TabBarIndicatorSize.label,
-                      labelColor: Color.fromARGB(255, 255, 102, 0),
-                      unselectedLabelColor: Colors.grey,
-                      tabs: _tabs,
+              ),
+              pinned: true,
+            ),
+            SliverFillRemaining(
+              child: TabBarView(
+                children: [
+                  SingleChildScrollView(
+                    physics: const NeverScrollableScrollPhysics(),
+                    child: Column(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        ProductInfo(product: widget.product),
+                      ],
                     ),
                   ),
-                  pinned: true,
+                  const SingleChildScrollView(
+                    child: Column(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        ProductComments(),
+                      ],
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ],
+        ),
+        floatingActionButton: Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: SizedBox(
+            width: double.infinity,
+            child: FloatingActionButton.extended(
+              backgroundColor: Color.fromARGB(255, 255, 102, 0),
+              onPressed: () {
+                // Add your onPressed code here
+              },
+              icon: const Icon(Icons.add, color: Colors.white),
+              label: const Text(
+                'Add to cart',
+                style: TextStyle(
+                  color: Colors.white, // Set your desired color here
                 ),
-              ];
-            },
-            body: TabBarView(
-              children: [
-                ProductInfo(product: product),
-                ProductComments(),
-              ],
-            )),
+              ),
+            ),
+          ),
+        ),
+        floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
       ),
     );
   }

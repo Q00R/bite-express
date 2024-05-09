@@ -63,20 +63,6 @@ class ProductProvider extends ChangeNotifier {
     return _products.where((product) => product.category == category).toList();
   }
 
-  // Method to get products by keyword
-  // List<Product> getProductsByKeyword(String keyword) {
-  //   return _products.where((product) {
-  //     return product.title.contains(keyword) ||
-  //         product.description.contains(keyword) ||
-  //         product.category.contains(keyword) ||
-  //         product.subcategory.contains(keyword) ||
-  //         product.createdVendor.contains(keyword) ||
-  //         product.category.contains(keyword) ||
-  //         product.subcategory.contains(keyword) ||
-  //         product.price.contains(keyword);
-  //   }).toList();
-  // }
-
 // Method to get products by keyword, price range, and rating range
   List<Product> getProductsByKeyword(String keyword,
       {double priceFrom = 0,
@@ -121,5 +107,16 @@ class ProductProvider extends ChangeNotifier {
     }).toList();
 
     return filteredProducts;
+  }
+
+  List<Product> getProductsBySubCategory(
+    String productId,
+    String subCategory,
+  ) {
+    return _products
+        .where((product) =>
+            product.subcategory == subCategory &&
+            product.productId != productId)
+        .toList();
   }
 }
