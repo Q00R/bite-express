@@ -1,10 +1,22 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import '../classes/product.dart';
 import './relatedProductsList.dart';
 
 class ProductInfo extends StatelessWidget {
   final Product product;
   const ProductInfo({Key? key, required this.product}) : super(key: key);
+
+  double calculateAverageRating() {
+    if (product.ratings.isEmpty) {
+      return 1.0;
+    }
+    int total = 0;
+    product.ratings.values.forEach((rating) {
+      total += rating.toInt();
+    });
+    return (total / product.ratings.length).roundToDouble();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -92,6 +104,42 @@ class ProductInfo extends StatelessWidget {
                   fontWeight: FontWeight.normal,
                 ),
               ),
+            ),
+          ),
+          const SizedBox(height: 10),
+          const Divider(
+            color: Colors.grey,
+          ),
+          const SizedBox(height: 10),
+          const Align(
+            alignment: Alignment.centerLeft,
+            child: Text(
+              'Rating',
+              style: TextStyle(
+                fontSize: 18,
+                color: Colors.black,
+                fontWeight: FontWeight.w500,
+              ),
+            ),
+          ),
+          const SizedBox(height: 10),
+          Align(
+            alignment: Alignment.centerLeft,
+            child: RatingBar.builder(
+              initialRating: calculateAverageRating(),
+              minRating: 1,
+              direction: Axis.horizontal,
+              allowHalfRating: true,
+              itemCount: 5,
+              ignoreGestures: true,
+              itemPadding: const EdgeInsets.symmetric(horizontal: 4.0),
+              itemBuilder: (context, _) => const Icon(
+                Icons.star,
+                color: Colors.amber,
+              ),
+              onRatingUpdate: (rating) {
+                print(rating);
+              },
             ),
           ),
           const SizedBox(height: 10),

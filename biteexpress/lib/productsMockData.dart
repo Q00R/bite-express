@@ -88,7 +88,7 @@ final Map<String, dynamic> products = {
     "price": "2.99",
     "createdVendor": "Vendor1",
     "image": "product.png",
-    "ratings": {"userId1": 4, "userId2": 5},
+    "ratings": {"userId1": 4, "userId2": 4},
     "comments": {
       "commentId1": {
         "userId": "userId1",
