@@ -12,35 +12,12 @@ class ProductDetailsPage extends StatefulWidget {
 }
 
 class _ProductDetailsPageState extends State<ProductDetailsPage> {
-  final ScrollController _scrollController = ScrollController();
-  late double _maxScrollExtent;
-
-  @override
-  void initState() {
-    super.initState();
-    _scrollController.addListener(_scrollListener);
-  }
-
-  @override
-  void dispose() {
-    _scrollController.removeListener(_scrollListener);
-    _scrollController.dispose();
-    super.dispose();
-  }
-
-  void _scrollListener() {
-    if (_scrollController.offset > _maxScrollExtent) {
-      _scrollController.jumpTo(_maxScrollExtent);
-    }
-  }
-
   @override
   Widget build(BuildContext context) {
     return DefaultTabController(
       length: 2,
       child: Scaffold(
         body: CustomScrollView(
-          controller: _scrollController,
           slivers: <Widget>[
             SliverAppBar(
               expandedHeight: 300.0,
@@ -49,13 +26,11 @@ class _ProductDetailsPageState extends State<ProductDetailsPage> {
               stretch: true,
               flexibleSpace: LayoutBuilder(
                 builder: (BuildContext context, BoxConstraints constraints) {
-                  _maxScrollExtent =
-                      constraints.biggest.height - kToolbarHeight + 250;
                   return FlexibleSpaceBar(
                     centerTitle: true,
                     collapseMode: CollapseMode.parallax,
                     background: Image.asset(
-                      "../../assets/images/${widget.product.image}",
+                      "assets/images/${widget.product.image}",
                       fit: BoxFit.cover,
                     ),
                   );
@@ -71,7 +46,6 @@ class _ProductDetailsPageState extends State<ProductDetailsPage> {
                   tabs: _tabs,
                 ),
               ),
-              pinned: true,
             ),
             SliverFillRemaining(
               child: TabBarView(
@@ -103,7 +77,7 @@ class _ProductDetailsPageState extends State<ProductDetailsPage> {
           child: SizedBox(
             width: double.infinity,
             child: FloatingActionButton.extended(
-              backgroundColor: Color.fromARGB(255, 255, 102, 0),
+              backgroundColor: const Color.fromARGB(255, 255, 102, 0),
               onPressed: () {
                 // Add your onPressed code here
               },
