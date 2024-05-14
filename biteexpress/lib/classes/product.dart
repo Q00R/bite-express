@@ -22,4 +22,9 @@ class Product {
     required this.ratings,
     required this.comments,
   });
+
+  @override
+  String toString() {
+    return 'Product: {productId: $productId, title: $title, description: $description, createdVendor: $createdVendor, price: $price, image: $image, category: $category, subcategory: $subcategory, ratings: $ratings, comments: $comments}';
+  }
 }

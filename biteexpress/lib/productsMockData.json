@@ -1,0 +1,302 @@
+{
+	"productId1": {
+		"title": "Lion Chips",
+		"description": "Delicious crunchy chips perfect for snacking.",
+		"category": "Snacks",
+		"subCategory": "Chips",
+		"price": "2.99",
+		"createdVendor": "Vendor1",
+		"image": "https://m.media-amazon.com/images/I/81reeFQjkuL._AC_UF894,1000_QL80_.jpg",
+		"ratings": { "userId1": 4, "userId2": 4 },
+		"comments": {
+			"commentId1": {
+				"userId": "userId1",
+				"comment": "Great taste!",
+				"firstName": "Alice",
+				"lastName": "Smith"
+			},
+			"commentId2": {
+				"userId": "userId2",
+				"comment": "Love these chips!",
+				"firstName": "Bob",
+				"lastName": "Johnson"
+			}
+		}
+	},
+	"productId2": {
+		"title": "Organic Apples",
+		"description": "Fresh, organic apples bursting with flavor. And this time we are creating a special long description to test the text overflow feature of the app.",
+		"category": "Fruits & Vegetables",
+		"subCategory": "Fresh Fruits",
+		"price": "3.99",
+		"createdVendor": "Vendor2",
+		"image": "https://media.istockphoto.com/id/184276818/photo/red-apple.jpg?s=612x612&w=0&k=20&c=NvO-bLsG0DJ_7Ii8SSVoKLurzjmV0Qi4eGfn6nW3l5w=",
+		"ratings": {},
+		"comments": {}
+	},
+	"productId3": {
+		"title": "Whole Grain Bread",
+		"description": "Nutritious whole grain bread, perfect for sandwiches.",
+		"category": "Bakeries & Pastries",
+		"subCategory": "Bread",
+		"price": "4.99",
+		"createdVendor": "Vendor3",
+		"image": "https://media.istockphoto.com/id/157587362/photo/detailed-close-up-of-sliced-grain-bread-on-white-background.jpg?s=612x612&w=0&k=20&c=nr5f0Mb3Dx9RP_LmKKwlo6IlzDebfIdCbnERsnoSG94=",
+		"ratings": { "userId1": 5 },
+		"comments": {
+			"commentId1": {
+				"userId": "userId2",
+				"comment": "Love this bread!",
+				"firstName": "Bob",
+				"lastName": "Johnson"
+			}
+		}
+	},
+	"productId4": {
+		"title": "Fresh Salmon Fillet",
+		"description": "High-quality fresh salmon fillet, perfect for grilling or baking.",
+		"category": "Meat, Poultry & Seafood",
+		"subCategory": "Fish",
+		"price": "9.99",
+		"createdVendor": "Vendor4",
+		"image": "https://media.istockphoto.com/id/157641208/photo/a-large-pink-salmon-fillet-isolated-on-a-white-background.jpg?s=612x612&w=0&k=20&c=f6dDcUpFhv8Slk-pm2zV9TvMtwhqRckEJo5KQbwbElY=",
+		"ratings": { "userId2": 4 },
+		"comments": {}
+	},
+	"productId5": {
+		"title": "Classic Chocolate Chip Cookies",
+		"description": "Delicious homemade chocolate chip cookies, a timeless favorite.",
+		"category": "Bakeries & Pastries",
+		"subCategory": "Cookies",
+		"price": "5.99",
+		"createdVendor": "Vendor5",
+		"image": "https://media.istockphoto.com/id/157511634/photo/homemade-chocolate-chip-cookie-on-white-overhead-xxxl.jpg?s=612x612&w=0&k=20&c=0sdlLuP-vNNQZguX4AWIHSvUYBFWIJfkYoiwpKMM9zA=",
+		"ratings": { "userId1": 5, "userId3": 4 },
+		"comments": {
+			"commentId1": {
+				"userId": "userId3",
+				"comment": "These cookies are amazing!",
+				"firstName": "Emily",
+				"lastName": "Brown"
+			},
+			"commentId2": {
+				"userId": "userId1",
+				"comment": "I love these cookies!",
+				"firstName": "Alice",
+				"lastName": "Smith"
+			}
+		}
+	},
+	"productId6": {
+		"title": "Fresh Strawberries",
+		"description": "Juicy, ripe strawberries bursting with sweetness.",
+		"category": "Fruits & Vegetables",
+		"subCategory": "Fresh Fruits",
+		"price": "6.99",
+		"createdVendor": "Vendor6",
+		"image": "https://media.istockphoto.com/id/1412854156/photo/strawberries-isolated-strawberry-whole-and-a-half-on-white-background-strawberry-slice-with.jpg?s=612x612&w=0&k=20&c=sg8D6YofX0K9og_ugF4R50QrPAKQUvHn5vJGfr-7Zk4=",
+		"ratings": { "userId3": 5 },
+		"comments": {
+			"commentId1": {
+				"userId": "userId1",
+				"comment": "These strawberries are delicious!",
+				"firstName": "Alice",
+				"lastName": "Smith"
+			},
+			"commentId2": {
+				"userId": "userId3",
+				"comment": "I love these strawberries!",
+				"firstName": "Emily",
+				"lastName": "Brown"
+			}
+		}
+	},
+	"productId7": {
+		"title": "Vanilla Ice Cream",
+		"description": "Creamy vanilla ice cream, perfect for dessert.",
+		"category": "Ice Cream",
+		"subCategory": "Cups",
+		"price": "3.99",
+		"createdVendor": "Vendor7",
+		"image": "https://media.istockphoto.com/id/497905280/photo/vanilla-frozen-yogurt-in-takeaway-cup.jpg?s=612x612&w=0&k=20&c=sJ2KygkLJ5o4dwlcMuGyZ0Ox2GOXBo4ACVK33hKXZiQ=",
+		"ratings": { "userId2": 5 },
+		"comments": {
+			"commentId1": {
+				"userId": "userId2",
+				"comment": "This ice cream is delicious!",
+				"firstName": "Bob",
+				"lastName": "Johnson"
+			}
+		}
+	},
+	"productId8": {
+		"title": "Fresh Spinach",
+		"description": "Crisp, fresh spinach leaves, perfect for salads.",
+		"category": "Fruits & Vegetables",
+		"subCategory": "Salad Greens",
+		"price": "2.99",
+		"createdVendor": "Vendor8",
+		"image": "https://media.istockphoto.com/id/1453790590/photo/pile-of-fresh-green-baby-spinach-leaves-isolated-on-white-background-close-up-flat-lay-food.jpg?s=612x612&w=0&k=20&c=s6K-oTrn79QwF3ZOloQcy40SqCbxfL21dU-ZablZmws=",
+		"ratings": {},
+		"comments": {}
+	},
+	"productId9": {
+		"title": "Iced Coffee",
+		"description": "Refreshing iced coffee, perfect for a hot day.",
+		"category": "Beverages",
+		"subCategory": "Coffee",
+		"price": "4.99",
+		"createdVendor": "Vendor9",
+		"image": "https://media.istockphoto.com/id/467913310/photo/nescafe-ready-to-drink-coffee.jpg?s=612x612&w=0&k=20&c=2QuZ90TDrspu8L6miSHCEWczXOjVOcGAEm-E2Q1lomY=",
+		"ratings": { "userId3": 4 },
+		"comments": {
+			"commentId1": {
+				"userId": "userId3",
+				"comment": "This coffee is delicious!",
+				"firstName": "Emily",
+				"lastName": "Brown"
+			}
+		}
+	},
+	"productId10": {
+		"title": "Frozen Pizza",
+		"description": "Delicious frozen pizza, perfect for a quick meal.",
+		"category": "Frozen",
+		"subCategory": "Frozen Pizza",
+		"price": "7.99",
+		"createdVendor": "Vendor10",
+		"image": "https://media.istockphoto.com/id/475407881/photo/digiorno-pepperoni-pizza-traditional-crust-box.jpg?s=612x612&w=0&k=20&c=cgnC0nChxZmP31_pf83NWOHzma6enjUGdAkjRMATAT4=",
+		"ratings": { "userId1": 4 },
+		"comments": {
+			"commentId1": {
+				"userId": "userId1",
+				"comment": "This pizza is great!",
+				"firstName": "Alice",
+				"lastName": "Smith"
+			}
+		}
+	},
+	"productId11": {
+		"title": "Fresh Oranges",
+		"description": "Juicy, ripe oranges bursting with flavor.",
+		"category": "Fruits & Vegetables",
+		"subCategory": "Fresh Fruits",
+		"price": "4.99",
+		"createdVendor": "Vendor11",
+		"image": "https://media.istockphoto.com/id/185284489/photo/orange.jpg?s=612x612&w=0&k=20&c=m4EXknC74i2aYWCbjxbzZ6EtRaJkdSJNtekh4m1PspE=",
+		"ratings": { "userId1": 5 },
+		"comments": {
+			"commentId1": {
+				"userId": "userId1",
+				"comment": "These oranges are delicious!",
+				"firstName": "Alice",
+				"lastName": "Smith"
+			},
+			"commentId2": {
+				"userId": "userId3",
+				"comment": "I love these oranges!",
+				"firstName": "Emily",
+				"lastName": "Brown"
+			}
+		}
+	},
+	"productId12": {
+		"title": "Fresh Broccoli",
+		"description": "Crunchy and nutritious broccoli florets.",
+		"category": "Fruits & Vegetables",
+		"subCategory": "Fresh Vegetables",
+		"price": "2.49",
+		"createdVendor": "Vendor12",
+		"image": "https://media.istockphoto.com/id/183300149/photo/broccoli.jpg?b=1&s=612x612&w=0&k=20&c=laaTb58C778Jbd_5wdpCky7fQj6xf3NUa7H8ECJ915U=",
+		"ratings": {},
+		"comments": {}
+	},
+	"productId13": {
+		"title": "Organic Strawberries",
+		"description": "Organic and sweet strawberries.",
+		"category": "Fruits & Vegetables",
+		"subCategory": "Organic Produce",
+		"price": "5.99",
+		"createdVendor": "Vendor13",
+		"image": "https://media.istockphoto.com/id/1310751628/photo/closeup-of-woman-hands-holding-freshly-picked-strawberries-in-garden-copy-space-handful-of.jpg?b=1&s=612x612&w=0&k=20&c=rR4reaecWdeQ4xRVDidP7udpJ_oaS5fjdsVXiENheUM=",
+		"ratings": {},
+		"comments": {}
+	},
+	"productId14": {
+		"title": "Fresh Pineapple",
+		"description": "Juicy and tropical pineapple, perfect for snacking or desserts.",
+		"category": "Fruits & Vegetables",
+		"subCategory": "Salad Greens",
+		"price": "3.99",
+		"createdVendor": "Vendor14",
+		"image": "https://media.istockphoto.com/id/1497639521/photo/ripe-pineapple-is-tropical-fruit-isolated-on-white-background.jpg?s=612x612&w=0&k=20&c=CbsnU075NPRPGzOxlrqAEb0gP7o4U5aZ-cV1qjBrGVw=",
+		"ratings": {},
+		"comments": {}
+	},
+	"productId15": {
+		"title": "Organic Kale",
+		"description": "Nutritious and leafy organic kale, great for salads or smoothies.",
+		"category": "Fruits & Vegetables",
+		"subCategory": "Exotic Fruits",
+		"price": "2.99",
+		"createdVendor": "Vendor15",
+		"image": "https://media.istockphoto.com/id/172657626/photo/a-bunch-of-green-kale-on-a-white-background.jpg?s=612x612&w=0&k=20&c=vY-i3_wzfUXdGioUNbsUsGUQ88c3UAY877TkwIxu104=",
+		"ratings": {},
+		"comments": {}
+	},
+	"productId16": {
+		"title": "Fresh Avocado",
+		"description": "Creamy and nutritious avocado, perfect for salads or guacamole.",
+		"category": "Fruits & Vegetables",
+		"subCategory": "Fresh Vegetables",
+		"price": "1.99",
+		"createdVendor": "Vendor16",
+		"image": "https://media.istockphoto.com/id/1449598782/photo/delicious-green-avocado-cut-in-half-on-white.jpg?s=612x612&w=0&k=20&c=tzbVtwSNEoUIfIuuymRBIqFLhqxDN7RD4kEwzpbffOk=",
+		"ratings": {},
+		"comments": {}
+	},
+	"productId17": {
+		"title": "Fresh Bananas",
+		"description": "Sweet and nutritious bananas, perfect for snacking.",
+		"category": "Fruits & Vegetables",
+		"subCategory": "Fresh Fruits",
+		"price": "0.99",
+		"createdVendor": "Vendor17",
+		"image": "https://media.istockphoto.com/id/1291262112/photo/banana.jpg?b=1&s=612x612&w=0&k=20&c=xZ0WBMuSb2kLGaaIQVlKnr_40oCbHvim0vc91QDRqxM=",
+		"ratings": {},
+		"comments": {}
+	},
+	"productId18": {
+		"title": "Fresh Mango",
+		"description": "Juicy and tropical mango, perfect for snacking or smoothies.",
+		"category": "Fruits & Vegetables",
+		"subCategory": "Exotic Fruits",
+		"price": "2.99",
+		"createdVendor": "Vendor18",
+		"image": "https://media.istockphoto.com/id/1318935291/photo/mango-fruit.jpg?s=612x612&w=0&k=20&c=Lf1ieODV7pDmwxyanrPBUWQP2MGOKi2cLXwWHlhgcFQ=",
+		"ratings": {},
+		"comments": {}
+	},
+	"productId19": {
+		"title": "Organic Blueberries",
+		"description": "Sweet and antioxidant-rich blueberries.",
+		"category": "Fruits & Vegetables",
+		"subCategory": "Fresh Fruits",
+		"price": "3.99",
+		"createdVendor": "Vendor19",
+		"image": "https://media.istockphoto.com/id/505641702/photo/blueberries.jpg?s=612x612&w=0&k=20&c=ALFUyXRcS5FGU0wfuSn2L1BjXJe55PXjWlMpBtkwRl4=",
+		"ratings": {},
+		"comments": {}
+	},
+	"productId20": {
+		"title": "Fresh Bell Peppers",
+		"description": "Crisp and colorful bell peppers, perfect for salads or stir-fries.",
+		"category": "Fruits & Vegetables",
+		"subCategory": "Fresh Vegetables",
+		"price": "1.49",
+		"createdVendor": "Vendor20",
+		"image": "https://media.istockphoto.com/id/157473776/photo/two-green-bell-peppers-isolated-on-a-plain-white-background.jpg?b=1&s=612x612&w=0&k=20&c=o9UlLm3_p9vimgQd1cUhfkiXgnjsYe3nPh06Cix2mkY=",
+		"ratings": {},
+		"comments": {}
+	}
+}

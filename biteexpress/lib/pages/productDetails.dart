@@ -29,9 +29,13 @@ class _ProductDetailsPageState extends State<ProductDetailsPage> {
                   return FlexibleSpaceBar(
                     centerTitle: true,
                     collapseMode: CollapseMode.parallax,
-                    background: Image.asset(
-                      "assets/images/${widget.product.image}",
-                      fit: BoxFit.cover,
+                    // background: Image.asset(
+                    //   "assets/images/${widget.product.image}",
+                    //   fit: BoxFit.cover,
+                    // ),
+                    background: Image.network(
+                      widget.product.image,
+                      fit: BoxFit.scaleDown,
                     ),
                   );
                 },

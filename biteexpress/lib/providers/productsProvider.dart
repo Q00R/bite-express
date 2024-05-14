@@ -1,57 +1,50 @@
 import 'package:flutter/material.dart';
 import '../classes/product.dart';
 import '../productsMockData.dart';
+import 'package:http/http.dart' as http;
+import 'dart:convert';
 
 class ProductProvider extends ChangeNotifier {
-  // This will simulate the database of products
   final List<Product> _products = [];
 
-  // Function to fetch products from mock data
-  // void fetchProducts() {
-  //   _products.clear();
+  final productsUrl = Uri.parse(
+      'https://bite-express-b3634-default-rtdb.firebaseio.com/products.json');
 
-  //   products.forEach((productId, productData) {
-  //     _products.add(Product(
-  //       productId: productId,
-  //       title: productData['title'],
-  //       description: productData['description'],
-  //       category: productData['category'],
-  //       subcategory: productData['subCategory'],
-  //       price: productData['price'],
-  //       createdVendor: productData['createdVendor'],
-  //       image: productData['image'],
-  //       ratings: Map<String, int>.from(productData['ratings']),
-  //       comments:
-  //           Map<String, Map<String, String>>.from(productData['comments']),
-  //     ));
-  //   });
-  //   notifyListeners();
-  // }
-
+  // Method to fetch products from database.
   Future<void> fetchProducts() async {
-    _products.clear();
+    try {
+      var response = await http.get(productsUrl);
+      var fetchedData = json.decode(response.body) as Map<String, dynamic>;
+      _products.clear();
 
-    for (var entry in products.entries) {
-      final productId = entry.key;
-      final productData = entry.value;
-      await Future.delayed(
-          Duration.zero); // Ensure each iteration is asynchronous
-      _products.add(Product(
-        productId: productId,
-        title: productData['title'],
-        description: productData['description'],
-        category: productData['category'],
-        subcategory: productData['subCategory'],
-        price: productData['price'],
-        createdVendor: productData['createdVendor'],
-        image: productData['image'],
-        ratings: Map<String, int>.from(productData['ratings']),
-        comments:
-            Map<String, Map<String, String>>.from(productData['comments']),
-      ));
+      fetchedData.forEach((key, productData) {
+        Map<String, dynamic> ratings = productData['ratings'] == null
+            ? {}
+            : Map<String, dynamic>.from(productData['ratings']);
+        Map<String, dynamic> comments = productData['comments'] == null
+            ? {}
+            : Map<String, dynamic>.from(productData['comments']);
+
+        _products.add(Product(
+          productId: key,
+          title: productData['title'],
+          description: productData['description'],
+          category: productData['category'],
+          subcategory: productData['subCategory'],
+          price: productData['price'].toString(),
+          createdVendor: productData['createdVendor'],
+          image: productData['image'],
+          ratings: ratings.map((key, value) =>
+              MapEntry(key, int.tryParse(value.toString()) ?? 0)),
+          comments: comments.map(
+              (key, value) => MapEntry(key, Map<String, String>.from(value))),
+        ));
+      });
+
+      notifyListeners();
+    } catch (error) {
+      print('DAMN BRUH, AN ERROR OCCURDED: $error');
     }
-
-    notifyListeners();
   }
 
   List<Product> get getAllProducts {
@@ -63,7 +56,7 @@ class ProductProvider extends ChangeNotifier {
     return _products.where((product) => product.category == category).toList();
   }
 
-// Method to get products by keyword, price range, and rating range
+  // Method to get products by keyword, price range, and rating range
   List<Product> getProductsByKeyword(String keyword,
       {double priceFrom = 0,
       double priceTo = double.infinity,
@@ -109,6 +102,7 @@ class ProductProvider extends ChangeNotifier {
     return filteredProducts;
   }
 
+  // Method to get products by subcategory
   List<Product> getProductsBySubCategory(
     String productId,
     String subCategory,
@@ -120,3 +114,26 @@ class ProductProvider extends ChangeNotifier {
         .toList();
   }
 }
+
+
+// fetchedData.forEach((productData) {
+//         Map<String, dynamic> ratings =
+//             Map<String, dynamic>.from(productData['ratings']);
+//         Map<String, dynamic> comments =
+//             Map<String, dynamic>.from(productData['comments']);
+
+//         _products.add(Product(
+//           productId: productData['productId'],
+//           title: productData['title'],
+//           description: productData['description'],
+//           category: productData['category'],
+//           subcategory: productData['subCategory'],
+//           price: productData['price'].toString(),
+//           createdVendor: productData['createdVendor'],
+//           image: productData['image'],
+//           ratings: ratings.map((key, value) =>
+//               MapEntry(key, int.tryParse(value.toString()) ?? 0)),
+//           comments: comments.map(
+//               (key, value) => MapEntry(key, Map<String, String>.from(value))),
+//         ));
+//       });
