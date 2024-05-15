@@ -38,6 +38,9 @@ dependencies:
    collection: ^1.18.0
    flutter_rating_bar: ^4.0.1
    http: ^1.2.0
+   carousel_slider: ^4.2.1
+   animation_search_bar: ^0.0.10
+   side_sheet: ^1.0.4
 
 dev_dependencies:
    flutter_test:

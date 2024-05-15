@@ -30,7 +30,7 @@
 // Frozen Vegetables, Frozen Fruits, Frozen Meals, Ice Cream, Frozen Pizza
 
 // Snacks:
-// Chips, Crackers, Popcorn, Nuts, Granola Bars
+// Chips, Crackers, Popcorn, Nuts, Granola Bars, Sweet Snacks
 
 // Beverages:
 // Water, Soda, Juice, Coffee, Tea

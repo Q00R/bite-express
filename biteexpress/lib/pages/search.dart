@@ -3,6 +3,9 @@ import 'package:provider/provider.dart';
 import '../widgets/productListKeyword.dart';
 import '../providers/productsProvider.dart';
 import '../classes/product.dart';
+import 'package:animation_search_bar/animation_search_bar.dart';
+import 'package:side_sheet/side_sheet.dart';
+import '../widgets/searchPageSideSheet.dart';
 
 class SearchPage extends StatefulWidget {
   const SearchPage({Key? key}) : super(key: key);
@@ -41,59 +44,90 @@ class _SearchPageState extends State<SearchPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Theme.of(context).colorScheme.inversePrimary,
-        title: const Text("Search Page"),
+        title: LayoutBuilder(
+          builder: (context, constraints) {
+            return AnimationSearchBar(
+              onChanged: (text) => debugPrint(text),
+              searchTextEditingController: _searchController,
+              searchBarWidth: constraints.maxWidth - 20,
+              cursorColor: const Color.fromARGB(255, 255, 94, 0),
+              searchFieldDecoration: BoxDecoration(
+                color: const Color.fromARGB(255, 255, 234, 222),
+                border: Border.all(
+                  color:
+                      const Color.fromARGB(255, 255, 197, 160).withOpacity(0.5),
+                  width: 1,
+                ),
+                borderRadius: BorderRadius.circular(15),
+              ),
+              isBackButtonVisible: false,
+              centerTitle: const Text(
+                'Browse Bite Express',
+                style: TextStyle(color: Colors.orange),
+                textAlign: TextAlign.center,
+              ).data,
+              centerTitleStyle: const TextStyle(
+                fontWeight: FontWeight.w500,
+                color: Colors.orange,
+                fontSize: 20,
+              ),
+              hintText: 'Search here...',
+              hintStyle: const TextStyle(
+                color: Colors.orange,
+                fontWeight: FontWeight.w300,
+              ),
+            );
+          },
+        ),
       ),
       body: Column(
         children: [
-          Container(
-            margin: const EdgeInsets.all(10),
-            padding: const EdgeInsets.symmetric(horizontal: 20),
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(5),
-              color: Colors.grey[200],
-            ),
-            child: TextField(
-              controller: _searchController,
-              decoration: InputDecoration(
-                hintText: 'Search',
-                border: InputBorder.none,
-                suffixIcon: IconButton(
-                  icon: const Icon(Icons.search),
-                  onPressed: () => _performSearch(context),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              ElevatedButton(
+                onPressed: () => _performSearch(context),
+                style: ElevatedButton.styleFrom(
+                    minimumSize: const Size(200, 40),
+                    backgroundColor: const Color.fromARGB(255, 255, 140, 0)),
+                child: const Row(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Icon(Icons.filter_list, color: Colors.white),
+                    SizedBox(width: 5),
+                    Text(
+                      'See Results',
+                      style: TextStyle(color: Colors.white),
+                    ),
+                  ],
                 ),
               ),
-            ),
-          ),
-          RangeSlider(
-            values: _currentRangeValues,
-            min: 0,
-            max: 1000,
-            onChanged: (RangeValues values) {
-              setState(() {
-                _currentRangeValues = values;
-              });
-            },
-            labels: RangeLabels(
-              _currentRangeValues.start.round().toString(),
-              _currentRangeValues.end.round().toString(),
-            ),
-            divisions: 500,
-          ),
-          RangeSlider(
-            values: _currentRatingValues,
-            min: 1,
-            max: 5,
-            onChanged: (RangeValues values) {
-              setState(() {
-                _currentRatingValues = values;
-              });
-            },
-            labels: RangeLabels(
-              _currentRatingValues.start.round().toString(),
-              _currentRatingValues.end.round().toString(),
-            ),
-            divisions: 4,
+              IconButton(
+                onPressed: () {
+                  SideSheet.right(
+                    body: FilterSheetContent(
+                      currentRangeValues: _currentRangeValues,
+                      currentRatingValues: _currentRatingValues,
+                      onPriceRangeChanged: (values) {
+                        setState(() {
+                          _currentRangeValues = values;
+                        });
+                      },
+                      onRatingRangeChanged: (values) {
+                        setState(() {
+                          _currentRatingValues = values;
+                        });
+                      },
+                    ),
+                    context: context,
+                  );
+                },
+                icon: const Icon(
+                  Icons.filter_alt,
+                  color: Colors.orange,
+                ),
+              ),
+            ],
           ),
           Expanded(
             child: ProductListKeyword(filteredProducts: _filteredProducts),

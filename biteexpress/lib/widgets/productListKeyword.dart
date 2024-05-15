@@ -29,13 +29,13 @@ class ProductListKeyword extends StatelessWidget {
 
     return Expanded(
       child: Padding(
-        padding: const EdgeInsets.all(10.0),
+        padding: const EdgeInsets.all(10),
         child: GridView.builder(
           gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
-            maxCrossAxisExtent: 200,
-            childAspectRatio: 4 / 6,
+            maxCrossAxisExtent: 170,
+            childAspectRatio: 6 / 10,
             crossAxisSpacing: 10,
-            mainAxisSpacing: 5,
+            mainAxisSpacing: 10,
           ),
           itemCount: filteredProducts.length,
           itemBuilder: (context, index) {

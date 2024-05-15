@@ -46,33 +46,33 @@ class CategoryList extends StatelessWidget {
         Container(
           alignment: Alignment.centerLeft,
           child: const Padding(
-            padding: EdgeInsets.all(10.0),
+            padding: EdgeInsets.fromLTRB(22, 20, 10, 10),
             child: Text(
               'Explore Categories',
-              style: TextStyle(fontSize: 24, fontWeight: FontWeight.w600),
+              style: TextStyle(fontSize: 18, fontWeight: FontWeight.w600),
             ),
           ),
         ),
-        Expanded(
-          child: Padding(
-            padding: const EdgeInsets.all(20.0),
-            child: GridView.builder(
-              gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
-                maxCrossAxisExtent: 200,
-                childAspectRatio: 8 / 11,
-                crossAxisSpacing: 10,
-                mainAxisSpacing: 20,
-              ),
-              itemCount: categories.length,
-              itemBuilder: (context, index) {
-                return CategoryCard(
-                  categoryName: categories[index],
-                  imagePath: imagePaths[index],
-                );
-              },
+        Padding(
+          padding: const EdgeInsets.fromLTRB(20, 5, 20, 20),
+          child: GridView.builder(
+            shrinkWrap: true,
+            physics: const NeverScrollableScrollPhysics(),
+            gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
+              maxCrossAxisExtent: 150,
+              childAspectRatio: 7 / 11,
+              crossAxisSpacing: 10,
+              mainAxisSpacing: 20,
             ),
+            itemCount: categories.length,
+            itemBuilder: (context, index) {
+              return CategoryCard(
+                categoryName: categories[index],
+                imagePath: imagePaths[index],
+              );
+            },
           ),
-        ),
+        )
       ],
     );
   }

@@ -25,7 +25,7 @@ class CategoryCard extends StatelessWidget {
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(15),
         ),
-        elevation: 5,
+        elevation: 1,
         child: Container(
           decoration: const BoxDecoration(
             gradient: LinearGradient(
@@ -52,13 +52,18 @@ class CategoryCard extends StatelessWidget {
                 ),
               ),
               ClipRRect(
-                borderRadius: BorderRadius.circular(15),
-                child: Image.asset(
-                  imagePath,
-                  fit: BoxFit.fill,
-                  width: double.infinity,
-                ),
-              ),
+                  borderRadius: BorderRadius.circular(15),
+                  // child: Image.asset(
+                  //   imagePath,
+                  //   fit: BoxFit.fill,
+                  //   width: double.infinity,
+                  // ),
+                  child: SizedBox(
+                    child: Image.asset(
+                      imagePath,
+                      fit: BoxFit.scaleDown,
+                    ),
+                  )),
             ],
           ),
         ),

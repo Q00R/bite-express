@@ -51,7 +51,7 @@ class _ProductListCategoryState extends State<ProductListCategory> {
           children: <Widget>[
             Text('No products found '),
             Icon(
-              Icons.sentiment_dissatisfied, // Sad face icon
+              Icons.sentiment_dissatisfied,
               color: Color.fromARGB(255, 255, 122, 70),
             ),
           ],
@@ -65,7 +65,7 @@ class _ProductListCategoryState extends State<ProductListCategory> {
         Container(
           margin: const EdgeInsets.symmetric(vertical: 5),
           child: SizedBox(
-            height: 40, // Reduced height
+            height: 40,
             child: ListView.builder(
               scrollDirection: Axis.horizontal,
               itemCount: subcategories.length,
@@ -78,29 +78,25 @@ class _ProductListCategoryState extends State<ProductListCategory> {
                     });
                   },
                   child: Container(
-                    padding: const EdgeInsets.symmetric(
-                        horizontal: 16,
-                        vertical: 6), // Reduced vertical padding
-                    margin:
-                        const EdgeInsets.only(right: 5), // Reduced right margin
+                    padding:
+                        const EdgeInsets.symmetric(horizontal: 16, vertical: 6),
+                    margin: const EdgeInsets.only(right: 5),
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(20),
                       color: subcategory == selectedSubcategory
                           ? const Color(0xFFFFE0B2)
-                          : null, // Light orange color when selected
+                          : null,
                       border: subcategory == selectedSubcategory
                           ? null
                           : Border.all(
-                              color: const Color.fromARGB(255, 232, 232,
-                                  232)), // Border only when not selected
+                              color: const Color.fromARGB(255, 232, 232, 232)),
                     ),
                     child: Center(
                       child: Text(
                         subcategory,
                         style: TextStyle(
                           color: subcategory == selectedSubcategory
-                              ? Colors
-                                  .deepOrange // Saturated orange color when selected
+                              ? Colors.deepOrange
                               : null,
                           fontWeight: FontWeight.bold,
                         ),
@@ -117,10 +113,10 @@ class _ProductListCategoryState extends State<ProductListCategory> {
             padding: const EdgeInsets.all(10.0),
             child: GridView.builder(
               gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
-                maxCrossAxisExtent: 200,
-                childAspectRatio: 4 / 6,
+                maxCrossAxisExtent: 170,
+                childAspectRatio: 6 / 11,
                 crossAxisSpacing: 10,
-                mainAxisSpacing: 5,
+                mainAxisSpacing: 10,
               ),
               itemCount: filteredProducts.length,
               itemBuilder: (context, index) {

@@ -53,7 +53,10 @@ class ProductProvider extends ChangeNotifier {
 
   // Method to get products by category
   List<Product> getProductsByCategory(String category) {
-    return _products.where((product) => product.category == category).toList();
+    return _products
+        .where((product) =>
+            product.category.toLowerCase() == category.toLowerCase())
+        .toList();
   }
 
   // Method to get products by keyword, price range, and rating range
@@ -64,14 +67,17 @@ class ProductProvider extends ChangeNotifier {
       int maxRating = 5}) {
     // Step 1: Filter by keyword
     List<Product> filteredProducts = _products.where((product) {
-      return product.title.contains(keyword) ||
-          product.description.contains(keyword) ||
-          product.category.contains(keyword) ||
-          product.subcategory.contains(keyword) ||
-          product.createdVendor.contains(keyword) ||
-          product.category.contains(keyword) ||
-          product.subcategory.contains(keyword) ||
-          product.price.toString().contains(keyword);
+      return product.title.toLowerCase().contains(keyword.toLowerCase()) ||
+          product.description.toLowerCase().contains(keyword.toLowerCase()) ||
+          product.category.toLowerCase().contains(keyword.toLowerCase()) ||
+          product.subcategory.toLowerCase().contains(keyword.toLowerCase()) ||
+          product.createdVendor.toLowerCase().contains(keyword.toLowerCase()) ||
+          product.category.toLowerCase().contains(keyword.toLowerCase()) ||
+          product.subcategory.toLowerCase().contains(keyword.toLowerCase()) ||
+          product.price
+              .toString()
+              .toLowerCase()
+              .contains(keyword.toLowerCase());
     }).toList();
     // If no products match the keyword, return an empty list
     if (filteredProducts.isEmpty) {
@@ -109,31 +115,8 @@ class ProductProvider extends ChangeNotifier {
   ) {
     return _products
         .where((product) =>
-            product.subcategory == subCategory &&
+            product.subcategory.toLowerCase() == subCategory.toLowerCase() &&
             product.productId != productId)
         .toList();
   }
 }
-
-
-// fetchedData.forEach((productData) {
-//         Map<String, dynamic> ratings =
-//             Map<String, dynamic>.from(productData['ratings']);
-//         Map<String, dynamic> comments =
-//             Map<String, dynamic>.from(productData['comments']);
-
-//         _products.add(Product(
-//           productId: productData['productId'],
-//           title: productData['title'],
-//           description: productData['description'],
-//           category: productData['category'],
-//           subcategory: productData['subCategory'],
-//           price: productData['price'].toString(),
-//           createdVendor: productData['createdVendor'],
-//           image: productData['image'],
-//           ratings: ratings.map((key, value) =>
-//               MapEntry(key, int.tryParse(value.toString()) ?? 0)),
-//           comments: comments.map(
-//               (key, value) => MapEntry(key, Map<String, String>.from(value))),
-//         ));
-//       });
