@@ -19,8 +19,8 @@ class Product {
     required this.category,
     required this.subcategory,
     required this.price,
-    required this.ratings,
-    required this.comments,
+    this.ratings = const {},
+    this.comments = const {},
   });
 
   @override
