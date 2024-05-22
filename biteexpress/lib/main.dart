@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import './pages/home.dart';
 import './pages/search.dart';
+import './pages/addProduct.dart';
 import './widgets/bottomNavigation.dart';
 import './providers/productsProvider.dart';
 
@@ -54,9 +55,7 @@ class _ParentWidgetState extends State<ParentWidget> {
           Container(
             child: Center(child: Text('Cart Page')),
           ),
-          Container(
-            child: Center(child: Text('More Page')),
-          ),
+          addProduct(),
         ],
       ),
       bottomNavigationBar: BottomNavigation(
