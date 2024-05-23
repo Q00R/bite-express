@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import '../classes/product.dart';
 import '../widgets/productInfo.dart';
 import '../widgets/productComments.dart';
+import '../classes/Cart.dart';
 
 class ProductDetailsPage extends StatefulWidget {
   final Product product;
@@ -12,8 +14,28 @@ class ProductDetailsPage extends StatefulWidget {
 }
 
 class _ProductDetailsPageState extends State<ProductDetailsPage> {
+  int _quantity = 0;
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    // Read the cart and initialize the quantity
+    _quantity = Provider.of<Cart>(context).getQuantity(widget.product);
+  }
+
+  void _showSnackBar(String message) {
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: Text(message),
+        duration: const Duration(seconds: 1),
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
+    final cart = context.watch<Cart>();
+
     return DefaultTabController(
       length: 2,
       child: Scaffold(
@@ -29,10 +51,6 @@ class _ProductDetailsPageState extends State<ProductDetailsPage> {
                   return FlexibleSpaceBar(
                     centerTitle: true,
                     collapseMode: CollapseMode.parallax,
-                    // background: Image.asset(
-                    //   "assets/images/${widget.product.image}",
-                    //   fit: BoxFit.cover,
-                    // ),
                     background: Image.network(
                       widget.product.image,
                       fit: BoxFit.scaleDown,
@@ -78,20 +96,39 @@ class _ProductDetailsPageState extends State<ProductDetailsPage> {
         ),
         floatingActionButton: Padding(
           padding: const EdgeInsets.all(8.0),
-          child: SizedBox(
-            width: double.infinity,
-            child: FloatingActionButton.extended(
-              backgroundColor: const Color.fromARGB(255, 255, 102, 0),
-              onPressed: () {
-                // Add your onPressed code here
-              },
-              icon: const Icon(Icons.add, color: Colors.white),
-              label: const Text(
-                'Add to cart',
-                style: TextStyle(
-                  color: Colors.white, // Set your desired color here
+          child: Container(
+            color: const Color.fromARGB(255, 255, 102, 0), // Orange background
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: [
+                if (_quantity > 0)
+                  IconButton(
+                    onPressed: () {
+                      cart.removeFromCart(widget.product);
+                      setState(() {
+                        _quantity = cart.getQuantity(widget.product);
+                      });
+                      _showSnackBar('Product removed from cart');
+                    },
+                    icon: const Icon(Icons.remove, color: Colors.white),
+                  ),
+                Text(
+                  '$_quantity',
+                  style: const TextStyle(
+                    fontSize: 18,
+                    color: Colors.white),
                 ),
-              ),
+                IconButton(
+                  onPressed: () {
+                    cart.addToCart(widget.product);
+                    setState(() {
+                      _quantity = cart.getQuantity(widget.product);
+                    });
+                    _showSnackBar('Product added to cart');
+                  },
+                  icon: const Icon(Icons.add, color: Colors.white),
+                ),
+              ],
             ),
           ),
         ),

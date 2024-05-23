@@ -17,7 +17,11 @@ class HomePage extends StatelessWidget {
             SizedBox(width: 8),
             Text(
               'Bite Express',
-              style: TextStyle(color: Colors.orange),
+              style: TextStyle(
+                color: Colors.orange,
+                fontSize: 24, // Increased font size for more presence
+                fontWeight: FontWeight.bold, // Bold font weight for emphasis
+              ),
             ),
           ],
         ),
@@ -34,12 +38,13 @@ class HomePage extends StatelessWidget {
                   Text(
                     'Bite Express Now, in 60 mins',
                     style: TextStyle(
-                        color: Colors.orange,
-                        fontSize: 12,
-                        fontWeight: FontWeight.bold),
+                      color: Colors.orange,
+                      fontSize: 16, // Increased font size for more presence
+                      fontWeight: FontWeight.bold, // Bold font weight for emphasis
+                    ),
                   ),
                   SizedBox(width: 8),
-                  Icon(Icons.cookie_outlined, color: Colors.orange, size: 15),
+                  Icon(Icons.cookie_outlined, color: Colors.orange, size: 20), // Increased icon size for more presence
                 ],
               ),
             ),
