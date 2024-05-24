@@ -1,0 +1,30 @@
+{
+  "project_info": {
+    "project_number": "510654992394",
+    "firebase_url": "https://bite-express-b3634-default-rtdb.firebaseio.com",
+    "project_id": "bite-express-b3634",
+    "storage_bucket": "bite-express-b3634.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:510654992394:android:0025946678d1b6a6ffcff3",
+        "android_client_info": {
+          "package_name": "com.example.biteexpress"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyApM1zNsqZK8E_-uWpy1De6JIlLa0poIw4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
