@@ -8,7 +8,7 @@ import './providers/productsProvider.dart';
 //import 'package:firebase_core/firebase_core.dart';
 //import 'firebase_options.dart';
 
-void main () {
+void main() {
 // WidgetsFlutterBinding.ensureInitialized();
 // await Firebase.initializeApp();
 
@@ -60,7 +60,7 @@ class _ParentWidgetState extends State<ParentWidget> {
           Container(
             child: Center(child: Text('Cart Page')),
           ),
-          addProduct(),
+          AddProduct(),
         ],
       ),
       bottomNavigationBar: BottomNavigation(
