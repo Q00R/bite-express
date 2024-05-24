@@ -1,3 +1,4 @@
+import './home.dart';
 import 'package:flutter/material.dart'; 
 import 'package:provider/provider.dart';
 import '../providers/authProvider.dart'; 
@@ -102,7 +103,15 @@ class _LoginScreenState extends State<LoginScreen> {
       var successOrError = await authprov.signup(em: email, pass: password); 
       if (successOrError == "success") { 
       Navigator.of(context).pop(); 
-      Navigator.of(context).pushNamed('/IdeasRoute'); 
+      //make a snack bar to show success. 
+        final snackBar = SnackBar( 
+          content: Text('Successfully signed up'), 
+          backgroundColor: Colors.red, 
+        ); 
+ 
+        ScaffoldMessenger.of(context).showSnackBar(snackBar); 
+      
+
       } else if (successOrError.contains("EMAIL_EXISTS")) { 
  
         final snackBar = SnackBar( 
@@ -118,7 +127,7 @@ class _LoginScreenState extends State<LoginScreen> {
       var successOrError = await authprov.signin(em: email, pass: password); 
       if (successOrError == "success") { 
       Navigator.of(context).pop(); 
-      Navigator.of(context).pushNamed('/IdeasRoute'); 
+      
         // do action for success, maybe navigate to ideas page. 
       } else if (successOrError.contains("EMAIL_NOT_FOUND")) { 
         final snackBar = SnackBar( 

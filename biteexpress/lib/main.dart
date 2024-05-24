@@ -5,8 +5,7 @@ import './pages/search.dart';
 import './pages/addProduct.dart';
 import './widgets/bottomNavigation.dart';
 import './providers/productsProvider.dart';
-import 'package:firebase_core/firebase_core.dart';
-//import 'firebase_options.dart';
+import './providers/authProvider.dart';
 
 void main () {
 // WidgetsFlutterBinding.ensureInitialized();
@@ -15,6 +14,7 @@ void main () {
   runApp(
     MultiProvider(
       providers: [
+        ChangeNotifierProvider(create: (ctx) => AuthProvider()), 
         ChangeNotifierProvider(create: (_) => ProductProvider()),
       ],
       child: const MyApp(),
