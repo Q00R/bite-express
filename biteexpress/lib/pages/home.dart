@@ -1,13 +1,15 @@
+import 'package:biteexpress/pages/LoginOrSignUpScreen.dart';
 import 'package:flutter/material.dart';
 import '../widgets/categoryList.dart';
 import '../widgets/homeCarousel.dart';
+
+
 
 class HomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        // backgroundColor: Theme.of(context).colorScheme.inversePrimary,
         title: const Row(
           children: [
             Icon(
@@ -21,6 +23,23 @@ class HomePage extends StatelessWidget {
             ),
           ],
         ),
+        actions: <Widget>[
+          IconButton(
+            icon: Icon(Icons.login), // replace with your preferred icon
+            onPressed: () {
+              // replace isLoggedIn with your actual condition to check if user is logged in
+              if (false) {
+                // perform logout operation
+              } else {
+                // perform login operation // navigate to login page
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => LoginScreen()),
+                );
+              }
+            },
+          ),
+        ],
       ),
       body: SingleChildScrollView(
         child: Column(

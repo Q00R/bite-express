@@ -42,10 +42,13 @@ dependencies:
    animation_search_bar: ^0.0.10
    side_sheet: ^1.0.4
    image_picker: ^0.8.5+3
-   firebase_auth: ^4.19.6
    fluttertoast: ^8.2.5
    font_awesome_flutter: ^10.7.0
    google_sign_in: ^6.2.1
+   firebase_auth: ^4.19.6
+   firebase_core: ^2.31.1
+   firebase_storage: ^11.7.6
+   cloud_firestore: ^4.17.4
 
 dev_dependencies:
    flutter_test:
