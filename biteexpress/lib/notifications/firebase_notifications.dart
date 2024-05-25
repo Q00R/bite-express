@@ -1,3 +1,5 @@
+import 'dart:html';
+
 import 'package:firebase_messaging/firebase_messaging.dart';
 
 class FirebaseNotifications {
@@ -28,12 +30,24 @@ class FirebaseNotifications {
     }
   }
 
-  Future<void> sendProductViewNotification(String productName) async {
-    // You can use Firebase Cloud Messaging to send a push notification
-    // Here you can call your backend service to send the notification
-    // For demonstration purposes, let's just print the message
-    print('User viewed product: $productName');
+// send notification once user add product to cAart say product added 
+  Future<void> sendProductViewNotification(String title) async {
+    print('Sending product view notification...');
 
-    // Your backend logic to send notification goes here
+    await _firebaseMessaging.subscribeToTopic('product_view');
+
+    await _firebaseMessaging.send(
+      RemoteMessage(
+        data: {
+          'title': title,
+          'body': 'User viewed a product',
+        },
+        notification: Notification(
+          title: title,
+          body: 'User viewed a product',
+        ),
+        topic: 'product_view',
+      ),
+    );
   }
 }
