@@ -30,12 +30,12 @@ class BottomNavigation extends StatelessWidget {
             type: BottomNavigationBarType.fixed,
             onTap: onIndexChanged,
             items: <BottomNavigationBarItem>[
-              BottomNavigationBarItem(
+              const BottomNavigationBarItem(
                 icon: Icon(Icons.home_outlined),
                 activeIcon: Icon(Icons.home_rounded),
                 label: 'Home',
               ),
-              BottomNavigationBarItem(
+              const BottomNavigationBarItem(
                 icon: Icon(Icons.search_outlined),
                 activeIcon: Icon(Icons.search_outlined),
                 label: 'Search',
@@ -58,7 +58,7 @@ class BottomNavigation extends StatelessWidget {
                           ),
                           child: Text(
                             cartItemCount.toString(),
-                            style: TextStyle(
+                            style: const TextStyle(
                               color: Colors.white,
                               fontSize: 10,
                               fontWeight: FontWeight.bold,
@@ -71,9 +71,8 @@ class BottomNavigation extends StatelessWidget {
                 activeIcon: Icon(Icons.shopping_cart_outlined),
                 label: 'Cart',
               ),
-              // More button
               if (authProvider.isAuthenticated) // Only show if authenticated
-                BottomNavigationBarItem(
+                const BottomNavigationBarItem(
                   icon: Icon(Icons.menu),
                   activeIcon: Icon(Icons.menu),
                   label: 'More',
@@ -88,12 +87,12 @@ class BottomNavigation extends StatelessWidget {
             type: BottomNavigationBarType.fixed,
             onTap: onIndexChanged,
             items: <BottomNavigationBarItem>[
-              BottomNavigationBarItem(
+              const BottomNavigationBarItem(
                 icon: Icon(Icons.home_outlined),
                 activeIcon: Icon(Icons.home_rounded),
                 label: 'Home',
               ),
-              BottomNavigationBarItem(
+              const BottomNavigationBarItem(
                 icon: Icon(Icons.search_outlined),
                 activeIcon: Icon(Icons.search_outlined),
                 label: 'Search',

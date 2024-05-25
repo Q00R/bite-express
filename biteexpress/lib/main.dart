@@ -55,12 +55,7 @@ class _MainAppScaffoldState extends State<MainAppScaffold> {
     return Scaffold(
       body: IndexedStack(
         index: _selectedIndex,
-        children: [
-          HomePage(),
-          SearchPage(),
-          CartPage(),
-          AddProduct(),
-        ],
+        children: _buildPages(context),
       ),
       bottomNavigationBar: BottomNavigation(
         selectedIndex: _selectedIndex,
@@ -71,5 +66,24 @@ class _MainAppScaffoldState extends State<MainAppScaffold> {
         },
       ),
     );
+  }
+
+  List<Widget> _buildPages(BuildContext context) {
+    final authProvider = Provider.of<AuthenticationProvider>(context);
+
+    if (authProvider.isAuthenticated) {
+      return [
+        HomePage(),
+        SearchPage(),
+        CartPage(),
+        AddProduct(),
+      ];
+    } else {
+      return [
+        HomePage(),
+        SearchPage(),
+        SignInWidget(),
+      ];
+    }
   }
 }
