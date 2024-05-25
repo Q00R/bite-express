@@ -2,12 +2,19 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import './pages/home.dart';
 import './pages/search.dart';
+import './pages/addProduct.dart';
 import './widgets/bottomNavigation.dart';
 import './providers/productsProvider.dart';
 import './classes/Cart.dart';  // Import the Cart class
 import './pages/cartPage.dart';
+//import 'package:firebase_core/firebase_core.dart';
+//import 'firebase_options.dart';
 
-void main() {
+void main () {
+// WidgetsFlutterBinding.ensureInitialized();
+// await Firebase.initializeApp();
+
+
   runApp(
     MultiProvider(
       providers: [
@@ -58,7 +65,10 @@ class _ParentWidgetState extends State<ParentWidget> {
           CartPage(),
           Container(
             child: Center(child: Text('More Page')),
-          ),
+          )
+         ,
+          addProduct(),
+
         ],
       ),
       bottomNavigationBar: BottomNavigation(

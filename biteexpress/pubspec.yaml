@@ -42,6 +42,9 @@ dependencies:
    animation_search_bar: ^0.0.10
    side_sheet: ^1.0.4
    web: 0.5.0
+   image_picker: ^0.8.5+3
+   firebase_auth: ^4.19.6
+
 
 dev_dependencies:
    flutter_test:
