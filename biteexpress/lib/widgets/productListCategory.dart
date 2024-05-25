@@ -4,6 +4,9 @@ import './productCard.dart';
 import '../classes/product.dart';
 import '../providers/productsProvider.dart';
 
+
+
+
 class ProductListCategory extends StatefulWidget {
   final String categoryName;
 
@@ -129,5 +132,6 @@ class _ProductListCategoryState extends State<ProductListCategory> {
         ),
       ],
     );
+    
   }
 }

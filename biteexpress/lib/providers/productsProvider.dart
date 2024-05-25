@@ -31,7 +31,7 @@ class ProductProvider extends ChangeNotifier {
           description: productData['description'],
           category: productData['category'],
           subcategory: productData['subCategory'],
-          price: productData['price'].toString(),
+          price: double.parse(productData['price'].toString()),
           createdVendor: productData['createdVendor'],
           image: productData['image'],
           ratings: ratings.map((key, value) =>
@@ -86,8 +86,8 @@ class ProductProvider extends ChangeNotifier {
 
     // Step 2: Filter by price range
     filteredProducts = filteredProducts.where((product) {
-      return double.parse(product.price) >= priceFrom &&
-          double.parse(product.price) <= priceTo;
+      return product.price >= priceFrom &&
+          product.price <= priceTo;
     }).toList();
 
     // If no products are in the price range, return an empty list
