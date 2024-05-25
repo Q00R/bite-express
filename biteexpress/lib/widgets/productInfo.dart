@@ -25,7 +25,7 @@ class _ProductInfoState extends State<ProductInfo> {
     widget.product.ratings.values.forEach((rating) {
       total += rating.toInt();
     });
-    return (total / widget.product.ratings.length).roundToDouble();
+    return (total / widget.product.ratings.length);
   }
 
   @override
