@@ -145,26 +145,6 @@ class ProductInfo extends StatelessWidget {
                   },
                 ),
               ),
-              const SizedBox(height: 10),
-              const Divider(
-                color: Colors.grey,
-              ),
-              const SizedBox(height: 10),
-              const Align(
-                alignment: Alignment.centerLeft,
-                child: Text(
-                  'Related Products',
-                  style: TextStyle(
-                    fontSize: 18,
-                    color: Colors.black,
-                    fontWeight: FontWeight.w500,
-                  ),
-                ),
-              ),
-              RelatedProductsList(
-                productId: product.productId,
-                subCategory: product.subcategory,
-              ),
               // "Rate and Comment" section
               const Divider(color: Colors.grey),
               const SizedBox(height: 10),
@@ -220,6 +200,26 @@ class ProductInfo extends StatelessWidget {
                   backgroundColor: const Color.fromARGB(255, 255, 102, 0),
                 ),
                 child: const Text('Submit'),
+              ),
+              const SizedBox(height: 10),
+              const Divider(
+                color: Colors.grey,
+              ),
+              const SizedBox(height: 10),
+              const Align(
+                alignment: Alignment.centerLeft,
+                child: Text(
+                  'Related Products',
+                  style: TextStyle(
+                    fontSize: 18,
+                    color: Colors.black,
+                    fontWeight: FontWeight.w500,
+                  ),
+                ),
+              ),
+              RelatedProductsList(
+                productId: product.productId,
+                subCategory: product.subcategory,
               ),
             ],
           ),
