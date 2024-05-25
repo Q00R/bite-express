@@ -5,21 +5,19 @@ import './pages/search.dart';
 import './pages/addProduct.dart';
 import './widgets/bottomNavigation.dart';
 import './providers/productsProvider.dart';
-import './classes/Cart.dart'; // Import the Cart class
+import './classes/Cart.dart';
 import './pages/cartPage.dart';
-//import 'package:firebase_core/firebase_core.dart';
-//import 'firebase_options.dart';
+import './pages/Signup.dart';
+import './pages/SignIn.dart';
+import './providers/authenticationProvider.dart';
 
 void main() {
-// WidgetsFlutterBinding.ensureInitialized();
-// await Firebase.initializeApp();
-
   runApp(
     MultiProvider(
       providers: [
         ChangeNotifierProvider(create: (_) => ProductProvider()),
-        ChangeNotifierProvider<Cart>(
-            create: (_) => Cart()), // Add Cart provider
+        ChangeNotifierProvider(create: (_) => Cart()),
+        ChangeNotifierProvider(create: (_) => AuthenticationProvider()),
       ],
       child: const MyApp(),
     ),
@@ -44,14 +42,29 @@ class MyApp extends StatelessWidget {
   }
 }
 
-class ParentWidget extends StatefulWidget {
+class ParentWidget extends StatelessWidget {
   const ParentWidget({Key? key}) : super(key: key);
 
   @override
-  State<ParentWidget> createState() => _ParentWidgetState();
+  Widget build(BuildContext context) {
+    return Consumer<AuthenticationProvider>(
+      builder: (ctx, authProvider, _) {
+        if (authProvider.isAuthenticated) {
+          return MainAppScaffold();
+        } else {
+          return SignInWidget();
+        }
+      },
+    );
+  }
 }
 
-class _ParentWidgetState extends State<ParentWidget> {
+class MainAppScaffold extends StatefulWidget {
+  @override
+  _MainAppScaffoldState createState() => _MainAppScaffoldState();
+}
+
+class _MainAppScaffoldState extends State<MainAppScaffold> {
   int _selectedIndex = 0;
 
   @override
@@ -63,9 +76,6 @@ class _ParentWidgetState extends State<ParentWidget> {
           HomePage(),
           SearchPage(),
           CartPage(),
-          Container(
-            child: Center(child: Text('Cart Page')),
-          ),
           AddProduct(),
         ],
       ),
