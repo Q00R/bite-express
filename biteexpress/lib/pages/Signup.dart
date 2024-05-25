@@ -1,5 +1,6 @@
 import 'package:biteexpress/main.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 import './home.dart'; // Import the home screen
 import './SignIn.dart';
@@ -94,6 +95,12 @@ class _SignUpWidgetState extends State<SignUpWidget> {
             TextField(
               controller: _phoneController,
               decoration: InputDecoration(labelText: 'Phone'),
+              keyboardType: TextInputType.phone,
+              inputFormatters: [
+                FilteringTextInputFormatter.allow(
+                  RegExp(r'[0-9]'), // Allow only numbers
+                ),
+              ],
             ),
             SizedBox(height: 16.0),
             DropdownButtonFormField(
