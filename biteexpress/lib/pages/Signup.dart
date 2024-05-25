@@ -1,9 +1,9 @@
 import 'package:biteexpress/main.dart';
-import 'package:biteexpress/pages/SignIn.dart';
-import 'package:biteexpress/providers/authenticationProvider.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import './home.dart'; // Import the home screen
+import './SignIn.dart';
+import '../providers/authenticationProvider.dart';
 
 class SignUpWidget extends StatefulWidget {
   @override
@@ -13,23 +13,42 @@ class SignUpWidget extends StatefulWidget {
 class _SignUpWidgetState extends State<SignUpWidget> {
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
+  final TextEditingController _firstNameController = TextEditingController();
+  final TextEditingController _lastNameController = TextEditingController();
+  final TextEditingController _phoneController = TextEditingController();
 
   String _errorMessage = '';
+  String _userType = 'Client'; // Default user type
 
   Future<void> _signUp() async {
     final email = _emailController.text.trim();
     final password = _passwordController.text.trim();
+    final firstName = _firstNameController.text.trim();
+    final lastName = _lastNameController.text.trim();
+    final phone = _phoneController.text.trim();
 
-    if (email.isEmpty || password.isEmpty) {
+    if (email.isEmpty ||
+        password.isEmpty ||
+        firstName.isEmpty ||
+        lastName.isEmpty ||
+        phone.isEmpty) {
       setState(() {
-        _errorMessage = 'Please enter email and password';
+        _errorMessage = 'Please fill all fields';
       });
       return;
     }
 
     try {
       await Provider.of<AuthenticationProvider>(context, listen: false)
-          .signUpWithEmailAndPassword(em: email, pass: password);
+          .signUpWithEmailAndPassword(
+        email: email,
+        password: password,
+        firstName: firstName,
+        lastName: lastName,
+        phone: phone,
+        userType:
+            _userType, // Pass the selected user type to the sign-up method
+      );
       setState(() {
         _errorMessage = 'Sign up successful!';
       });
@@ -64,6 +83,36 @@ class _SignUpWidgetState extends State<SignUpWidget> {
               decoration: InputDecoration(labelText: 'Password'),
               obscureText: true,
             ),
+            TextField(
+              controller: _firstNameController,
+              decoration: InputDecoration(labelText: 'First Name'),
+            ),
+            TextField(
+              controller: _lastNameController,
+              decoration: InputDecoration(labelText: 'Last Name'),
+            ),
+            TextField(
+              controller: _phoneController,
+              decoration: InputDecoration(labelText: 'Phone'),
+            ),
+            SizedBox(height: 16.0),
+            DropdownButtonFormField(
+              value: _userType,
+              onChanged: (value) {
+                setState(() {
+                  _userType = value.toString();
+                });
+              },
+              items: ['Client', 'Vendor']
+                  .map((type) => DropdownMenuItem(
+                        value: type,
+                        child: Text(type),
+                      ))
+                  .toList(),
+              decoration: InputDecoration(
+                labelText: 'User Type',
+              ),
+            ),
             SizedBox(height: 16.0),
             ElevatedButton(
               onPressed: _signUp,
@@ -96,6 +145,9 @@ class _SignUpWidgetState extends State<SignUpWidget> {
   void dispose() {
     _emailController.dispose();
     _passwordController.dispose();
+    _firstNameController.dispose();
+    _lastNameController.dispose();
+    _phoneController.dispose();
     super.dispose();
   }
 }
