@@ -60,10 +60,10 @@ class _CheckoutPageState extends State<CheckoutPage> {
 
                   return ListTile(
                     leading: Image.network(
-                      product.image, // Provide the product image URL
-                      width: 50, // Adjust width as needed
-                      height: 50, // Adjust height as needed
-                      fit: BoxFit.cover, // Adjust the fit as needed
+                      product.image, 
+                      width: 50,
+                      height: 50, 
+                      fit: BoxFit.cover,
                     ),
                     title: Text(product.title),
                     subtitle: Text('Quantity: ${cart.getQuantity(product)}'),
@@ -137,7 +137,6 @@ class _CheckoutPageState extends State<CheckoutPage> {
                   onPressed: () {
                     if (_paymentType == PaymentType.cash) {
                       // Place order logic for cash payment
-                      // For example, you can navigate to a confirmation page
                     } else if (_paymentType == PaymentType.card) {
                       // Show payment details widget for card payment
                       setState(() {
@@ -146,7 +145,7 @@ class _CheckoutPageState extends State<CheckoutPage> {
                     }
                   },
                   style: ElevatedButton.styleFrom(
-                    primary: Colors.orange, // Change button color to orange
+                    backgroundColor: Colors.orange, // Change button color to orange
                     textStyle: TextStyle(fontSize: 20), // Increase font size
                   ),
                   child: Text(

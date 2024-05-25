@@ -41,6 +41,7 @@ dependencies:
    carousel_slider: ^4.2.1
    animation_search_bar: ^0.0.10
    side_sheet: ^1.0.4
+   web: 0.5.0
 
 dev_dependencies:
    flutter_test:
