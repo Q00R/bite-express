@@ -100,33 +100,37 @@ class CartPage extends StatelessWidget {
             if (totalPrice > 0) // Only show buttons when total price is greater than 0
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 16.0),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                child: Column(
                   children: [
-                    Text(
-                      'Total Price: \$${totalPrice.toStringAsFixed(2)}',
-                      style: TextStyle(
-                        fontSize: 20,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
                     Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        ElevatedButton(
-                          onPressed: () {
-                            cart.clearCart();
-                          },
-                          child: Text('Clear Cart'),
+                        Text(
+                          'Total Price: \$${totalPrice.toStringAsFixed(2)}',
+                          style: TextStyle(
+                            fontSize: 10, // Adjust font size
+                            fontWeight: FontWeight.bold,
+                          ),
                         ),
-                        SizedBox(width: 8), // Add some spacing between buttons
-                        ElevatedButton(
-                          onPressed: () {
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(builder: (context) => CheckoutPage()),
-                            );
-                          },
-                          child: Text('Go to Checkout'),
+                        Row(
+                          children: [
+                            ElevatedButton(
+                              onPressed: () {
+                                cart.clearCart();
+                              },
+                              child: Text('Clear Cart'),
+                            ),
+                            SizedBox(width: 8), // Add some spacing between buttons
+                            ElevatedButton(
+                              onPressed: () {
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(builder: (context) => CheckoutPage()),
+                                );
+                              },
+                              child: Text('Checkout'), // Adjust the text
+                            ),
+                          ],
                         ),
                       ],
                     ),
