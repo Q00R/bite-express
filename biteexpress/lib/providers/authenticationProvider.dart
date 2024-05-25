@@ -1,11 +1,25 @@
 import 'dart:convert';
+import 'package:biteexpress/classes/user.dart';
 import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
 
 class AuthenticationProvider with ChangeNotifier {
+  // Singleton instance
+  static final AuthenticationProvider _instance =
+      AuthenticationProvider._internal();
+
+  factory AuthenticationProvider() {
+    return _instance;
+  }
+
+  AuthenticationProvider._internal();
+
   bool _isAuthenticated = false;
+  String? _authToken;
 
   bool get isAuthenticated => _isAuthenticated;
+  String? get authToken => _authToken;
+
   Future<void> signUpWithEmailAndPassword({
     required String email,
     required String password,
@@ -30,22 +44,23 @@ class AuthenticationProvider with ChangeNotifier {
       );
 
       if (response.statusCode == 200) {
-        _isAuthenticated = true;
-        notifyListeners();
-
         var decodedResponse =
             json.decode(response.body) as Map<String, dynamic>;
         final userId = decodedResponse['localId'];
 
-        // Save user information to the database
         await saveUserInfoToDatabase(
             userId: userId,
             firstName: firstName,
             lastName: lastName,
             phone: phone,
-            userType: userType);
+            userType: userType,
+            email: email);
 
-        print("token=" + decodedResponse['idToken']);
+        _authToken = decodedResponse['localId'];
+        _isAuthenticated = true;
+        notifyListeners();
+
+        print("token=" + _authToken!);
         print("Expires=" + decodedResponse['expiresIn']);
         print("local ID=" + decodedResponse['localId']);
       } else {
@@ -58,8 +73,10 @@ class AuthenticationProvider with ChangeNotifier {
     }
   }
 
-  Future<void> signInWithEmailAndPassword(
-      {required String em, required String pass}) async {
+  Future<void> signInWithEmailAndPassword({
+    required String email,
+    required String password,
+  }) async {
     final url = Uri.parse(
         'https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=AIzaSyApM1zNsqZK8E_-uWpy1De6JIlLa0poIw4');
 
@@ -68,19 +85,21 @@ class AuthenticationProvider with ChangeNotifier {
         url,
         body: json.encode(
           {
-            'email': em,
-            'password': pass,
+            'email': email,
+            'password': password,
             'returnSecureToken': true,
           },
         ),
       );
 
       if (response.statusCode == 200) {
-        _isAuthenticated = true;
-        notifyListeners();
         var decodedResponse =
             json.decode(response.body) as Map<String, dynamic>;
-        print("token=" + decodedResponse['idToken']);
+        _authToken = decodedResponse['localId'];
+        _isAuthenticated = true;
+        notifyListeners();
+
+        print("token=" + _authToken!);
         print("Expires=" + decodedResponse['expiresIn']);
         print("local ID=" + decodedResponse['localId']);
       } else {
@@ -94,17 +113,19 @@ class AuthenticationProvider with ChangeNotifier {
   }
 
   Future<void> signOut() async {
-    // Implement sign-out logic here
     _isAuthenticated = false;
+    _authToken = null;
     notifyListeners();
   }
 
-  Future<void> saveUserInfoToDatabase(
-      {required String userId,
-      required String firstName,
-      required String lastName,
-      required String phone,
-      required String userType}) async {
+  Future<void> saveUserInfoToDatabase({
+    required String userId,
+    required String firstName,
+    required String lastName,
+    required String phone,
+    required String email,
+    required String userType,
+  }) async {
     final databaseUrl =
         'https://bite-express-b3634-default-rtdb.firebaseio.com/users/$userId.json';
 
@@ -115,7 +136,8 @@ class AuthenticationProvider with ChangeNotifier {
           'firstname': firstName,
           'lastname': lastName,
           'phone': phone,
-          'userType': userType
+          'userType': userType,
+          'email': email
         }),
       );
 
@@ -128,6 +150,38 @@ class AuthenticationProvider with ChangeNotifier {
     } catch (err) {
       print('Error: $err');
       throw err;
+    }
+  }
+
+  Future<User?> getUserInfo() async {
+    String? userId = _authToken;
+    if (userId == null) {
+      print('User ID not found in token.');
+      return null;
+    }
+
+    final url = Uri.parse(
+        'https://bite-express-b3634-default-rtdb.firebaseio.com/users/$userId.json');
+
+    try {
+      final response = await http.get(url);
+
+      if (response.statusCode == 200) {
+        final userInfo = json.decode(response.body) as Map<String, dynamic>;
+        return User(
+            firstname: userInfo['firstname'],
+            lastname: userInfo['lastname'],
+            phone: userInfo['phone'],
+            userType: userInfo['userType'],
+            email: userInfo['email'],
+            userId: userId);
+      } else {
+        print('Failed to fetch user info: ${response.statusCode}');
+        return null;
+      }
+    } catch (err) {
+      print('Error: $err');
+      return null;
     }
   }
 }

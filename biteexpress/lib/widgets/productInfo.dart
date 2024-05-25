@@ -144,7 +144,6 @@ class _ProductInfoState extends State<ProductInfo> {
                   initialRating: calculateAverageRating(),
                   minRating: 1,
                   direction: Axis.horizontal,
-                  allowHalfRating: true,
                   itemCount: 5,
                   ignoreGestures: true,
                   itemPadding: const EdgeInsets.symmetric(horizontal: 4.0),
@@ -212,9 +211,6 @@ class _ProductInfoState extends State<ProductInfo> {
                               .addCommentToProduct(
                             widget.product,
                             comment,
-                            'userId', // Replace with actual userId
-                            'FirstName', // Replace with actual firstName
-                            'LastName', // Replace with actual lastName
                             _rating,
                           );
                           _commentController.clear();
