@@ -1,3 +1,4 @@
+import 'package:biteexpress/pages/MorePage.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import './pages/home.dart';
@@ -76,7 +77,7 @@ class _MainAppScaffoldState extends State<MainAppScaffold> {
         HomePage(),
         SearchPage(),
         CartPage(),
-        AddProduct(),
+        MorePage(),
       ];
     } else {
       return [

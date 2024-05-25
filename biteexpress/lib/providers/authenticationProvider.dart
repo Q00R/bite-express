@@ -75,4 +75,10 @@ class AuthenticationProvider with ChangeNotifier {
       throw err;
     }
   }
+
+  Future<void> signOut() async {
+    // Implement sign-out logic here
+    _isAuthenticated = false;
+    notifyListeners();
+  }
 }
