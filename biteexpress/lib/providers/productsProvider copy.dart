@@ -89,8 +89,8 @@ class ProductProvider extends ChangeNotifier {
 
     // Step 2: Filter by price range
     filteredProducts = filteredProducts.where((product) {
-      return double.parse(product.price) >= priceFrom &&
-          double.parse(product.price) <= priceTo;
+      return double.parse(product.price as String) >= priceFrom &&
+          double.parse(product.price as String) <= priceTo;
     }).toList();
 
     // If no products are in the price range, return an empty list

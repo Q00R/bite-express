@@ -146,8 +146,7 @@ class ProductProvider extends ChangeNotifier {
 
     // Step 2: Filter by price range
     filteredProducts = filteredProducts.where((product) {
-      return product.price >= priceFrom &&
-          product.price <= priceTo;
+      return product.price >= priceFrom && product.price <= priceTo;
     }).toList();
 
     // If no products are in the price range, return an empty list
@@ -220,7 +219,7 @@ class ProductProvider extends ChangeNotifier {
       image: "test",
       category: _selectedCategory!,
       subcategory: _selectedSubcategory!,
-      price: _priceController.text,
+      price: double.parse(_priceController.text),
     );
   }
 
