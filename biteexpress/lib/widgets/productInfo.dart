@@ -33,8 +33,7 @@ class _ProductInfoState extends State<ProductInfo> {
   Widget build(BuildContext context) {
     final authProvider = context.watch<AuthenticationProvider>();
 
-    return ListView(
-      shrinkWrap: true,
+    return Column(
       children: [
         Padding(
           padding: const EdgeInsets.all(20.0),
