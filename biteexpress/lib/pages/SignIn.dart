@@ -28,7 +28,7 @@ class _SignInWidgetState extends State<SignInWidget> {
 
     try {
       await Provider.of<AuthenticationProvider>(context, listen: false)
-          .signInWithEmailAndPassword(em: email, pass: password);
+          .signInWithEmailAndPassword(email: email, password: password);
       setState(() {
         _errorMessage = 'Login successful!';
       });
