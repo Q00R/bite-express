@@ -21,9 +21,9 @@ class _ProductInfoState extends State<ProductInfo> {
     if (widget.product.ratings.isEmpty) {
       return 0;
     }
-    int total = 0;
+    double total = 0;
     widget.product.ratings.values.forEach((rating) {
-      total += rating.toInt();
+      total += rating.toDouble();
     });
     return (total / widget.product.ratings.length);
   }
