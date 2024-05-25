@@ -99,7 +99,7 @@ class _ProductDetailsPageState extends State<ProductDetailsPage> {
 
 const _tabs = [
   Tab(icon: Icon(Icons.info), text: "Product Info"),
-  Tab(icon: Icon(Icons.comment), text: "Comments"),
+  Tab(icon: Icon(Icons.comment), text: "Reviews"),
 ];
 
 class _SliverAppBarDelegate extends SliverPersistentHeaderDelegate {
