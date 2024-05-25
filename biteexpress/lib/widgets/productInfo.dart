@@ -4,6 +4,7 @@ import '../classes/product.dart';
 import './relatedProductsList.dart';
 import '../providers/productsProvider.dart';
 import 'package:provider/provider.dart';
+import '../providers/authenticationProvider.dart';
 
 class ProductInfo extends StatefulWidget {
   final Product product;
@@ -30,6 +31,8 @@ class _ProductInfoState extends State<ProductInfo> {
 
   @override
   Widget build(BuildContext context) {
+    final authProvider = context.watch<AuthenticationProvider>();
+
     return ListView(
       shrinkWrap: true,
       children: [
@@ -156,76 +159,82 @@ class _ProductInfoState extends State<ProductInfo> {
                 ),
               ),
               const Divider(color: Colors.grey),
-              const SizedBox(height: 10),
-              const Align(
-                alignment: Alignment.centerLeft,
-                child: Text(
-                  'Rate and Review',
-                  style: TextStyle(
-                    fontSize: 18,
-                    color: Colors.black,
-                    fontWeight: FontWeight.w500,
-                  ),
-                ),
-              ),
-              const SizedBox(height: 10),
-              RatingBar.builder(
-                initialRating: 0,
-                minRating: 1,
-                direction: Axis.horizontal,
-                allowHalfRating: true,
-                itemCount: 5,
-                itemBuilder: (context, _) => const Icon(
-                  Icons.star,
-                  color: Colors.amber,
-                ),
-                onRatingUpdate: (rating) {
-                  setState(() {
-                    _rating = rating;
-                  });
-                },
-              ),
-              Padding(
-                padding: const EdgeInsets.symmetric(vertical: 8.0),
-                child: TextFormField(
-                  controller: _commentController,
-                  maxLines: null,
-                  keyboardType: TextInputType.multiline,
-                  decoration: const InputDecoration(
-                    hintText: 'Write your review here...',
-                    border: OutlineInputBorder(
-                      borderSide: BorderSide(color: Colors.orange),
-                    ),
-                  ),
-                ),
-              ),
-              ElevatedButton(
-                onPressed: () {
-                  final comment = _commentController.text;
-                  if (comment.isNotEmpty) {
-                    Provider.of<ProductProvider>(context, listen: false)
-                        .addCommentToProduct(
-                      widget.product,
-                      comment,
-                      'userId', // Replace with actual userId
-                      'FirstName', // Replace with actual firstName
-                      'LastName', // Replace with actual lastName
-                      _rating,
-                    );
-                    _commentController.clear();
-                    ScaffoldMessenger.of(context).showSnackBar(
-                      const SnackBar(
-                        content: Text('Review and Rating added successfully!'),
+              if (authProvider.isAuthenticated)
+                Column(
+                  children: [
+                    const SizedBox(height: 10),
+                    const Align(
+                      alignment: Alignment.centerLeft,
+                      child: Text(
+                        'Rate and Review',
+                        style: TextStyle(
+                          fontSize: 18,
+                          color: Colors.black,
+                          fontWeight: FontWeight.w500,
+                        ),
                       ),
-                    );
-                  }
-                },
-                child: const Text('Submit Review'),
-              ),
-              const SizedBox(height: 10),
-              const Divider(
-                color: Colors.grey,
-              ),
+                    ),
+                    const SizedBox(height: 10),
+                    RatingBar.builder(
+                      initialRating: 0,
+                      minRating: 1,
+                      direction: Axis.horizontal,
+                      allowHalfRating: true,
+                      itemCount: 5,
+                      itemBuilder: (context, _) => const Icon(
+                        Icons.star,
+                        color: Colors.amber,
+                      ),
+                      onRatingUpdate: (rating) {
+                        setState(() {
+                          _rating = rating;
+                        });
+                      },
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(vertical: 8.0),
+                      child: TextFormField(
+                        controller: _commentController,
+                        maxLines: null,
+                        keyboardType: TextInputType.multiline,
+                        decoration: const InputDecoration(
+                          hintText: 'Write your review here...',
+                          border: OutlineInputBorder(
+                            borderSide: BorderSide(color: Colors.orange),
+                          ),
+                        ),
+                      ),
+                    ),
+                    ElevatedButton(
+                      onPressed: () {
+                        final comment = _commentController.text;
+                        if (comment.isNotEmpty) {
+                          Provider.of<ProductProvider>(context, listen: false)
+                              .addCommentToProduct(
+                            widget.product,
+                            comment,
+                            'userId', // Replace with actual userId
+                            'FirstName', // Replace with actual firstName
+                            'LastName', // Replace with actual lastName
+                            _rating,
+                          );
+                          _commentController.clear();
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            const SnackBar(
+                              content:
+                                  Text('Review and Rating added successfully!'),
+                            ),
+                          );
+                        }
+                      },
+                      child: const Text('Submit Review'),
+                    ),
+                    const SizedBox(height: 10),
+                    const Divider(
+                      color: Colors.grey,
+                    ),
+                  ],
+                ),
               const SizedBox(height: 10),
               const Align(
                 alignment: Alignment.centerLeft,
