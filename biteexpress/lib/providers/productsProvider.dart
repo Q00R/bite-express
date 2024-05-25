@@ -264,58 +264,64 @@ class ProductProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-  Future<void> addCommentAndRatingToProduct(
-      Product product, String userId, String comment, double rating) async {
-    print(comment);
+  Future<void> addCommentToProduct(Product product, String comment,
+      String userId, String firstName, String lastName, double rating) async {
     print(rating);
-    // final url = Uri.parse(
-    //     'https://bite-express-b3634-default-rtdb.firebaseio.com/products/${product.productId}.json');
-    // try {
-    //   // Fetch existing comments and ratings for the product
-    //   final response = await http.get(url);
-    //   final responseData = json.decode(response.body);
+    final url = Uri.parse(
+        'https://bite-express-b3634-default-rtdb.firebaseio.com/products/${product.productId}.json');
 
-    //   // Check if user has already commented or rated
-    //   if (responseData != null &&
-    //       responseData['comments'] != null &&
-    //       responseData['comments'][userId] != null) {
-    //     // User has already commented or rated, do not add again
-    //     print('User has already commented or rated this product.');
-    //     return;
-    //   }
+    try {
+      final existingComment =
+          product.comments[userId]; // Check if user already commented
+      final existingRating =
+          product.ratings[userId]; // Check if user already rated
 
-    //   // User has not commented or rated before, add comment and rating
-    //   final Map<String, dynamic> updatedData = {
-    //     'title': product.title,
-    //     'description': product.description,
-    //     'image': product.image,
-    //     'category': product.category,
-    //     'subCategory': product.subcategory,
-    //     'price': product.price,
-    //     'comments': {
-    //       // Add user's comment
-    //       userId: comment,
-    //     },
-    //     'ratings': {
-    //       // Add user's rating
-    //       userId: rating,
-    //     },
-    //   };
+      final newCommentId = userId; // Use the user ID as the comment ID
+      final newComment = {
+        newCommentId: {
+          'comment': comment,
+          'firstName': firstName,
+          'lastName': lastName,
+          'userId': userId,
+        }
+      };
 
-    //   // Update the product data with comments and ratings
-    //   final updateResponse = await http.patch(
-    //     url,
-    //     body: json.encode(updatedData),
-    //   );
+      final updatedComments = {
+        ...product.comments,
+        ...newComment
+      }; // Merge new comment with existing comments
 
-    //   if (updateResponse.statusCode == 200) {
-    //     print("Comment and rating added successfully!");
-    //   } else {
-    //     print(
-    //         "Failed to add comment and rating. Status code: ${updateResponse.statusCode}");
-    //   }
-    // } catch (error) {
-    //   print("Error adding comment and rating: $error");
-    // }
+      final updatedRatings = {
+        ...product.ratings,
+        if (existingRating != null) // If user already rated, update the rating
+          userId: rating,
+        if (existingRating == null) // If user didn't rate, add the rating
+          userId: rating,
+      };
+
+      final response = await http.patch(
+        url,
+        body: json.encode({
+          'comments': updatedComments,
+          'ratings': updatedRatings,
+        }),
+      );
+
+      if (response.statusCode == 200) {
+        // If the user already commented, update the existing comment
+        if (existingComment != null) {
+          // Remove the old comment
+          updatedComments.remove(userId);
+          // Merge the updated comment with existing comments
+          updatedComments.addAll(newComment);
+        }
+
+        notifyListeners();
+      } else {
+        print("Failed to add comment. Status code: ${response.statusCode}");
+      }
+    } catch (error) {
+      print("Error adding comment: $error");
+    }
   }
 }
