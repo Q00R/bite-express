@@ -5,7 +5,15 @@ import './pages/search.dart';
 import './widgets/bottomNavigation.dart';
 import './providers/productsProvider.dart';
 
-void main() {
+//import 'package:firebase_core/firebase_core.dart';
+//import 'firebase_options.dart';
+
+Future<void> main() async {
+// WidgetsFlutterBinding.ensureInitialized();
+// await Firebase.initializeApp();
+  WidgetsFlutterBinding
+      .ensureInitialized(); // Ensure Flutter binding is initialized
+
   runApp(
     MultiProvider(
       providers: [
@@ -22,6 +30,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      debugShowCheckedModeBanner: false,
       title: 'Flutter Demo',
       theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(
@@ -51,9 +60,6 @@ class _ParentWidgetState extends State<ParentWidget> {
         children: [
           HomePage(),
           SearchPage(),
-          Container(
-            child: Center(child: Text('Cart Page')),
-          ),
           Container(
             child: Center(child: Text('More Page')),
           ),
