@@ -12,7 +12,7 @@ class ProductComments extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         const Text(
-          'PRODUCT COMMENTS',
+          'PRODUCT REVIEWS',
           style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
         ),
         const SizedBox(height: 10),
