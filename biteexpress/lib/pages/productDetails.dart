@@ -84,6 +84,7 @@ class _ProductDetailsPageState extends State<ProductDetailsPage> {
                     ),
                   ),
                   SingleChildScrollView(
+                    physics: const NeverScrollableScrollPhysics(),
                     child: Column(
                       mainAxisSize: MainAxisSize.min,
                       children: [
