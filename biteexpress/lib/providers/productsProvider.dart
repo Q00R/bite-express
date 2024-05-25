@@ -1,3 +1,5 @@
+import 'package:biteexpress/classes/user.dart';
+import 'package:biteexpress/providers/authenticationProvider.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:http/http.dart' as http;
@@ -8,6 +10,7 @@ import '../classes/product.dart';
 import '../productsMockData.dart';
 
 class ProductProvider extends ChangeNotifier {
+  AuthenticationProvider authProvider = AuthenticationProvider();
   final List<Product> _products = [];
   final _titleController = TextEditingController();
   final _descriptionController = TextEditingController();
@@ -225,11 +228,14 @@ class ProductProvider extends ChangeNotifier {
   Future<void> addProductToDatabase(Product product) async {
     final url = Uri.parse(
         'https://bite-express-b3634-default-rtdb.firebaseio.com/products.json');
+    User? user = await fetchUserInfo();
+    String vendor =
+        user != null ? "${user.firstname ?? ''} ${user.lastname ?? ''}" : '';
     try {
       final response = await http.post(
         url,
         body: json.encode({
-          'createdVendor': product.createdVendor,
+          'createdVendor': vendor,
           'title': product.title,
           'description': product.description,
           'image':
@@ -262,12 +268,15 @@ class ProductProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-  Future<void> addCommentToProduct(Product product, String comment,
-      String userId, String firstName, String lastName, double rating) async {
+  Future<void> addCommentToProduct(
+      Product product, String comment, double rating) async {
     print(rating);
     final url = Uri.parse(
         'https://bite-express-b3634-default-rtdb.firebaseio.com/products/${product.productId}.json');
-
+    User? user = await fetchUserInfo();
+    String? userId = user?.userId;
+    String? firstName = user?.firstname;
+    String? lastName = user?.lastname;
     try {
       final existingComment =
           product.comments[userId]; // Check if user already commented
@@ -321,5 +330,15 @@ class ProductProvider extends ChangeNotifier {
     } catch (error) {
       print("Error adding comment: $error");
     }
+  }
+
+  Future<User?> fetchUserInfo() async {
+    User? user = await authProvider.getUserInfo();
+    if (user != null) {
+      print(user);
+    } else {
+      print('Failed to fetch user info.');
+    }
+    return user;
   }
 }

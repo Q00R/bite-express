@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import './ProfilePage.dart';
+import 'addProduct.dart'; // Import the AddProductPage
 
 class MorePage extends StatelessWidget {
   @override
@@ -39,6 +40,16 @@ class MorePage extends StatelessWidget {
             icon: Icons.settings,
             onTap: () {
               // Add navigation logic for Settings
+            },
+          ),
+          _buildNavigationItem(
+            text: 'Add Product', // Button to navigate to AddProductPage
+            icon: Icons.add,
+            onTap: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => AddProduct()),
+              );
             },
           ),
           _buildNavigationItem(
