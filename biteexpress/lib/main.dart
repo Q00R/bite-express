@@ -5,6 +5,8 @@ import './pages/search.dart';
 import './pages/addProduct.dart';
 import './widgets/bottomNavigation.dart';
 import './providers/productsProvider.dart';
+import './classes/Cart.dart'; // Import the Cart class
+import './pages/cartPage.dart';
 //import 'package:firebase_core/firebase_core.dart';
 //import 'firebase_options.dart';
 
@@ -16,6 +18,8 @@ void main() {
     MultiProvider(
       providers: [
         ChangeNotifierProvider(create: (_) => ProductProvider()),
+        ChangeNotifierProvider<Cart>(
+            create: (_) => Cart()), // Add Cart provider
       ],
       child: const MyApp(),
     ),
@@ -28,6 +32,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      debugShowCheckedModeBanner: false,
       title: 'Flutter Demo',
       theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(
@@ -57,6 +62,7 @@ class _ParentWidgetState extends State<ParentWidget> {
         children: [
           HomePage(),
           SearchPage(),
+          CartPage(),
           Container(
             child: Center(child: Text('Cart Page')),
           ),
