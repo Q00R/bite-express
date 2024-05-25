@@ -1,5 +1,7 @@
+import 'package:awesome_notifications/awesome_notifications.dart';
 import 'package:biteexpress/notifications/firebase_notifications.dart';
 import 'package:biteexpress/notifications/firebase_options.dart';
+import 'package:biteexpress/notifications/local_notf.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -19,7 +21,17 @@ Future<void> main () async {
  WidgetsFlutterBinding.ensureInitialized(); // Ensure Flutter binding is initialized
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform); // Initialize Firebase
   await FirebaseNotifications().initFirebase(); // Initialize Firebase notifications
+      LocalNotificationService.initialize();
 
+AwesomeNotifications().initialize(
+      null,
+      [
+        NotificationChannel(
+            channelKey: "basic_channel",
+            channelName: "Basic notifications",
+            channelDescription: "Notifications channel for basic test")
+      ],
+      debug: true);
   runApp(
     MultiProvider(
       providers: [

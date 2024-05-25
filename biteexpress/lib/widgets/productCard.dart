@@ -1,9 +1,15 @@
+import 'package:awesome_notifications/awesome_notifications.dart';
 import 'package:biteexpress/notifications/firebase_notifications.dart';
 import 'package:flutter/material.dart';
 import '../classes/product.dart';
 import '../pages/productDetails.dart';
 
 class ProductCard extends StatelessWidget {
+  triggerNotification() {
+    AwesomeNotifications().createNotification(
+        content: NotificationContent(
+            id: 10, channelKey: "basic_channel", body: "New Product Added"));
+  }
   final Product product;
 
   const ProductCard({
@@ -15,7 +21,11 @@ class ProductCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-                            FirebaseNotifications().sendProductViewNotification(
+triggerNotification();
+
+
+
+                            FirebaseNotifications().sendNotification(
                               'Product: ${product.title}',
                             ); // Trigger notification
 

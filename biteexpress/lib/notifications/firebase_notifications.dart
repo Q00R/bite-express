@@ -1,5 +1,5 @@
-import 'dart:html';
-
+import 'dart:convert';
+import 'package:http/http.dart' as http;
 import 'package:firebase_messaging/firebase_messaging.dart';
 
 class FirebaseNotifications {
@@ -30,24 +30,35 @@ class FirebaseNotifications {
     }
   }
 
-// send notification once user add product to cAart say product added 
-  Future<void> sendProductViewNotification(String title) async {
-    print('Sending product view notification...');
+  Future<void> sendNotification(   String title ) async {
+      String? token = await _firebaseMessaging.getToken();
 
-    await _firebaseMessaging.subscribeToTopic('product_view');
+    // Construct the request body
+    Map<String, dynamic> requestBody = {
+      'to':  token,
+      'notification': {
+        'title': title,
+ 
+      },
+      'priority': 'high',
+    };
 
-    await _firebaseMessaging.send(
-      RemoteMessage(
-        data: {
-          'title': title,
-          'body': 'User viewed a product',
-        },
-        notification: Notification(
-          title: title,
-          body: 'User viewed a product',
-        ),
-        topic: 'product_view',
-      ),
+    // Send a POST request to FCM endpoint
+    final response = await http.post(
+      Uri.parse('https://fcm.googleapis.com/fcm/send'),
+      headers: <String, String>{
+        'Content-Type': 'application/json',
+        'Authorization': 'key=AIzaSyApM1zNsqZK8E_-uWpy1De6JIlLa0poIw4',
+      },
+      body: jsonEncode(requestBody),
     );
+
+    if (response.statusCode == 200) {
+      print('Notification sent successfully');
+    } else {
+      print('Failed to send notification. Status code: ${response.statusCode}');
+    }
   }
-}
+
+} 
+
