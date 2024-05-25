@@ -94,8 +94,7 @@ class ProductProvider extends ChangeNotifier {
           price: double.parse(productData['price'].toString()),
           createdVendor: productData['createdVendor'],
           image: productData['image'],
-          ratings: ratings.map((key, value) =>
-              MapEntry(key, int.tryParse(value.toString()) ?? 0)),
+          ratings: ratings.map((key, value) => MapEntry(key, value ?? 0)),
           comments: comments.map(
               (key, value) => MapEntry(key, Map<String, String>.from(value))),
         ));
