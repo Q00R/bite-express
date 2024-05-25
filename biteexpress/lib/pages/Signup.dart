@@ -5,6 +5,7 @@ import 'package:provider/provider.dart';
 import './home.dart'; // Import the home screen
 import './SignIn.dart';
 import '../providers/authenticationProvider.dart';
+import 'onboardingPage.dart';
 
 class SignUpWidget extends StatefulWidget {
   @override
@@ -54,8 +55,11 @@ class _SignUpWidgetState extends State<SignUpWidget> {
         _errorMessage = 'Sign up successful!';
       });
       // Navigate to home screen after successful sign-up
+      // Navigator.of(context).pushReplacement(
+      //   MaterialPageRoute(builder: (context) => MainAppScaffold()),
+      // );
       Navigator.of(context).pushReplacement(
-        MaterialPageRoute(builder: (context) => MainAppScaffold()),
+        MaterialPageRoute(builder: (context) => OnboardingPage1()),
       );
     } catch (e) {
       setState(() {
@@ -72,77 +76,79 @@ class _SignUpWidgetState extends State<SignUpWidget> {
       ),
       body: Padding(
         padding: EdgeInsets.all(16.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            TextField(
-              controller: _emailController,
-              decoration: InputDecoration(labelText: 'Email'),
-            ),
-            TextField(
-              controller: _passwordController,
-              decoration: InputDecoration(labelText: 'Password'),
-              obscureText: true,
-            ),
-            TextField(
-              controller: _firstNameController,
-              decoration: InputDecoration(labelText: 'First Name'),
-            ),
-            TextField(
-              controller: _lastNameController,
-              decoration: InputDecoration(labelText: 'Last Name'),
-            ),
-            TextField(
-              controller: _phoneController,
-              decoration: InputDecoration(labelText: 'Phone'),
-              keyboardType: TextInputType.phone,
-              inputFormatters: [
-                FilteringTextInputFormatter.allow(
-                  RegExp(r'[0-9]'), // Allow only numbers
-                ),
-              ],
-            ),
-            SizedBox(height: 16.0),
-            DropdownButtonFormField(
-              value: _userType,
-              onChanged: (value) {
-                setState(() {
-                  _userType = value.toString();
-                });
-              },
-              items: ['Client', 'Vendor']
-                  .map((type) => DropdownMenuItem(
-                        value: type,
-                        child: Text(type),
-                      ))
-                  .toList(),
-              decoration: InputDecoration(
-                labelText: 'User Type',
+        child: SingleChildScrollView(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              TextField(
+                controller: _emailController,
+                decoration: InputDecoration(labelText: 'Email'),
               ),
-            ),
-            SizedBox(height: 16.0),
-            ElevatedButton(
-              onPressed: _signUp,
-              child: Text('Sign Up'),
-            ),
-            if (_errorMessage.isNotEmpty)
-              Padding(
-                padding: EdgeInsets.symmetric(vertical: 8.0),
-                child: Text(
-                  _errorMessage,
-                  style: TextStyle(color: Colors.orange),
+              TextField(
+                controller: _passwordController,
+                decoration: InputDecoration(labelText: 'Password'),
+                obscureText: true,
+              ),
+              TextField(
+                controller: _firstNameController,
+                decoration: InputDecoration(labelText: 'First Name'),
+              ),
+              TextField(
+                controller: _lastNameController,
+                decoration: InputDecoration(labelText: 'Last Name'),
+              ),
+              TextField(
+                controller: _phoneController,
+                decoration: InputDecoration(labelText: 'Phone'),
+                keyboardType: TextInputType.phone,
+                inputFormatters: [
+                  FilteringTextInputFormatter.allow(
+                    RegExp(r'[0-9]'), // Allow only numbers
+                  ),
+                ],
+              ),
+              SizedBox(height: 16.0),
+              DropdownButtonFormField(
+                value: _userType,
+                onChanged: (value) {
+                  setState(() {
+                    _userType = value.toString();
+                  });
+                },
+                items: ['Client', 'Vendor']
+                    .map((type) => DropdownMenuItem(
+                          value: type,
+                          child: Text(type),
+                        ))
+                    .toList(),
+                decoration: InputDecoration(
+                  labelText: 'User Type',
                 ),
               ),
-            TextButton(
-              onPressed: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => SignInWidget()),
-                );
-              },
-              child: Text('Already have an account? Sign in'),
-            ),
-          ],
+              SizedBox(height: 16.0),
+              ElevatedButton(
+                onPressed: _signUp,
+                child: Text('Sign Up'),
+              ),
+              if (_errorMessage.isNotEmpty)
+                Padding(
+                  padding: EdgeInsets.symmetric(vertical: 8.0),
+                  child: Text(
+                    _errorMessage,
+                    style: TextStyle(color: Colors.orange),
+                  ),
+                ),
+              TextButton(
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => SignInWidget()),
+                  );
+                },
+                child: Text('Already have an account? Sign in'),
+              ),
+            ],
+          ),
         ),
       ),
     );

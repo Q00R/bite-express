@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import './ProfilePage.dart';
 import 'addProduct.dart'; // Import the AddProductPage
 
 class MorePage extends StatelessWidget {
@@ -10,25 +11,28 @@ class MorePage extends StatelessWidget {
       ),
       body: ListView(
         children: [
-          _buildNavigationItem(
-            text: 'Home',
-            icon: Icons.home,
-            onTap: () {
-              // Add navigation logic for Home
-            },
-          ),
-          _buildNavigationItem(
-            text: 'Search',
-            icon: Icons.search,
-            onTap: () {
-              // Add navigation logic for Search
-            },
-          ),
+          // _buildNavigationItem(
+          //   text: 'Home',
+          //   icon: Icons.home,
+          //   onTap: () {
+          //     // Add navigation logic for Home
+          //   },
+          // ),
+          // _buildNavigationItem(
+          //   text: 'Search',
+          //   icon: Icons.search,
+          //   onTap: () {
+          //     // Add navigation logic for Search
+          //   },
+          // ),
           _buildNavigationItem(
             text: 'Profile',
             icon: Icons.person,
             onTap: () {
-              // Add navigation logic for Profile
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => ProfilePage1()),
+              );
             },
           ),
           _buildNavigationItem(
@@ -51,6 +55,27 @@ class MorePage extends StatelessWidget {
           _buildNavigationItem(
             text: 'Sign Out',
             icon: Icons.exit_to_app,
+            onTap: () {
+              // Add sign out logic
+            },
+          ),
+          _buildNavigationItem(
+            text: 'Contacy Us',
+            icon: Icons.contact_emergency,
+            onTap: () {
+              // Add sign out logic
+            },
+          ),
+          _buildNavigationItem(
+            text: 'Help',
+            icon: Icons.help_center,
+            onTap: () {
+              // Add sign out logic
+            },
+          ),
+          _buildNavigationItem(
+            text: 'About',
+            icon: Icons.info,
             onTap: () {
               // Add sign out logic
             },
