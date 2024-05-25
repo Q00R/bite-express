@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 import '../classes/product.dart';
-import '../providers/addProductsProvider.dart';
+import '../providers/ProductsProvider.dart';
 
 class AddProduct extends StatelessWidget {
   @override
@@ -44,7 +44,6 @@ class AddProduct extends StatelessWidget {
             child: Consumer<ProductProvider>(
               builder: (context, provider, child) {
                 return Form(
-                  key: provider.formKey,
                   child: ListView(
                     children: <Widget>[
                       TextFormField(
