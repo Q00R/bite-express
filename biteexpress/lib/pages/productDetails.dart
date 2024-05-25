@@ -29,10 +29,6 @@ class _ProductDetailsPageState extends State<ProductDetailsPage> {
                   return FlexibleSpaceBar(
                     centerTitle: true,
                     collapseMode: CollapseMode.parallax,
-                    // background: Image.asset(
-                    //   "assets/images/${widget.product.image}",
-                    //   fit: BoxFit.cover,
-                    // ),
                     background: Image.network(
                       widget.product.image,
                       fit: BoxFit.scaleDown,
@@ -63,11 +59,11 @@ class _ProductDetailsPageState extends State<ProductDetailsPage> {
                       ],
                     ),
                   ),
-                  const SingleChildScrollView(
+                  SingleChildScrollView(
                     child: Column(
                       mainAxisSize: MainAxisSize.min,
                       children: [
-                        ProductComments(),
+                        ProductComments(product: widget.product),
                       ],
                     ),
                   ),
@@ -89,7 +85,7 @@ class _ProductDetailsPageState extends State<ProductDetailsPage> {
               label: const Text(
                 'Add to cart',
                 style: TextStyle(
-                  color: Colors.white, // Set your desired color here
+                  color: Colors.white,
                 ),
               ),
             ),
