@@ -1,3 +1,4 @@
+import 'package:biteexpress/pages/MorePage.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import './pages/home.dart';
@@ -5,21 +6,19 @@ import './pages/search.dart';
 import './pages/addProduct.dart';
 import './widgets/bottomNavigation.dart';
 import './providers/productsProvider.dart';
-import './classes/Cart.dart';  // Import the Cart class
+import './classes/Cart.dart';
 import './pages/cartPage.dart';
-//import 'package:firebase_core/firebase_core.dart';
-//import 'firebase_options.dart';
+import './pages/Signup.dart';
+import './pages/SignIn.dart';
+import './providers/authenticationProvider.dart';
 
-void main () {
-// WidgetsFlutterBinding.ensureInitialized();
-// await Firebase.initializeApp();
-
-
+void main() {
   runApp(
     MultiProvider(
       providers: [
         ChangeNotifierProvider(create: (_) => ProductProvider()),
-        ChangeNotifierProvider<Cart>(create: (_) => Cart()),  // Add Cart provider
+        ChangeNotifierProvider(create: (_) => Cart()),
+        ChangeNotifierProvider(create: (_) => AuthenticationProvider()),
       ],
       child: const MyApp(),
     ),
@@ -39,19 +38,17 @@ class MyApp extends StatelessWidget {
             seedColor: const Color.fromARGB(255, 255, 115, 1)),
         useMaterial3: true,
       ),
-      home: const ParentWidget(),
+      home: MainAppScaffold(), // Set HomePage as the initial screen
     );
   }
 }
 
-class ParentWidget extends StatefulWidget {
-  const ParentWidget({Key? key}) : super(key: key);
-
+class MainAppScaffold extends StatefulWidget {
   @override
-  State<ParentWidget> createState() => _ParentWidgetState();
+  _MainAppScaffoldState createState() => _MainAppScaffoldState();
 }
 
-class _ParentWidgetState extends State<ParentWidget> {
+class _MainAppScaffoldState extends State<MainAppScaffold> {
   int _selectedIndex = 0;
 
   @override
@@ -59,17 +56,7 @@ class _ParentWidgetState extends State<ParentWidget> {
     return Scaffold(
       body: IndexedStack(
         index: _selectedIndex,
-        children: [
-          HomePage(),
-          SearchPage(),
-          CartPage(),
-          Container(
-            child: Center(child: Text('More Page')),
-          )
-         ,
-          addProduct(),
-
-        ],
+        children: _buildPages(context),
       ),
       bottomNavigationBar: BottomNavigation(
         selectedIndex: _selectedIndex,
@@ -80,5 +67,24 @@ class _ParentWidgetState extends State<ParentWidget> {
         },
       ),
     );
+  }
+
+  List<Widget> _buildPages(BuildContext context) {
+    final authProvider = Provider.of<AuthenticationProvider>(context);
+
+    if (authProvider.isAuthenticated) {
+      return [
+        HomePage(),
+        SearchPage(),
+        CartPage(),
+        MorePage(),
+      ];
+    } else {
+      return [
+        HomePage(),
+        SearchPage(),
+        SignInWidget(),
+      ];
+    }
   }
 }

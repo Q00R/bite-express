@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
-import '../providers/addProductsProvider.dart';
+import '../classes/product.dart';
+import '../providers/ProductsProvider.dart';
 
-class addProduct extends StatelessWidget {
+class AddProduct extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ChangeNotifierProvider(
@@ -109,13 +111,13 @@ class addProduct extends StatelessWidget {
                       TextFormField(
                         controller: provider.priceController,
                         decoration: const InputDecoration(labelText: 'Price'),
-                        keyboardType: TextInputType.number,
+                        inputFormatters: <TextInputFormatter>[
+                          FilteringTextInputFormatter.allow(
+                              RegExp(r'^\d+\.?\d{0,2}')),
+                        ],
                         validator: (value) {
                           if (value == null || value.isEmpty) {
                             return 'Please enter a price';
-                          }
-                          if (double.tryParse(value) == null) {
-                            return 'Please enter a valid number';
                           }
                           return null;
                         },
@@ -133,12 +135,19 @@ class addProduct extends StatelessWidget {
                         ),
                       const SizedBox(height: 20),
                       ElevatedButton(
-                        onPressed: () {
+                        onPressed: () async {
                           if (provider.validateForm()) {
-                            final product = provider.createProduct();
-                            // Handle the product data (e.g., save to a database or navigate to another screen)
+                            Product newProduct = provider.createProduct();
+                            await provider.addProductToDatabase(newProduct);
+                            ScaffoldMessenger.of(context).showSnackBar(
+                                const SnackBar(
+                                    content:
+                                        Text('Product added successfully!')));
+                            // Optionally navigate to another screen or clear the form
                           } else {
-                            // Show validation error
+                            ScaffoldMessenger.of(context).showSnackBar(
+                                const SnackBar(
+                                    content: Text('Please fill all fields')));
                           }
                         },
                         child: const Text(
