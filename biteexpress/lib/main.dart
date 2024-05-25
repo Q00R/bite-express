@@ -37,24 +37,7 @@ class MyApp extends StatelessWidget {
             seedColor: const Color.fromARGB(255, 255, 115, 1)),
         useMaterial3: true,
       ),
-      home: const ParentWidget(),
-    );
-  }
-}
-
-class ParentWidget extends StatelessWidget {
-  const ParentWidget({Key? key}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Consumer<AuthenticationProvider>(
-      builder: (ctx, authProvider, _) {
-        if (authProvider.isAuthenticated) {
-          return MainAppScaffold();
-        } else {
-          return SignInWidget();
-        }
-      },
+      home: MainAppScaffold(), // Set HomePage as the initial screen
     );
   }
 }
