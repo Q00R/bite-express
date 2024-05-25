@@ -27,4 +27,13 @@ class FirebaseNotifications {
       print('User declined or has not accepted permission');
     }
   }
+
+  Future<void> sendProductViewNotification(String productName) async {
+    // You can use Firebase Cloud Messaging to send a push notification
+    // Here you can call your backend service to send the notification
+    // For demonstration purposes, let's just print the message
+    print('User viewed product: $productName');
+
+    // Your backend logic to send notification goes here
+  }
 }

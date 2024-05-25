@@ -1,3 +1,4 @@
+import 'package:biteexpress/notifications/firebase_notifications.dart';
 import 'package:flutter/material.dart';
 import '../classes/product.dart';
 import '../pages/productDetails.dart';
@@ -14,6 +15,10 @@ class ProductCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
+                            FirebaseNotifications().sendProductViewNotification(
+                              'Product: ${product.title}',
+                            ); // Trigger notification
+
         Navigator.push(
           context,
           MaterialPageRoute(
