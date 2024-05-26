@@ -12,17 +12,14 @@ import './pages/cartPage.dart';
 import './pages/Signup.dart';
 import './pages/SignIn.dart';
 import './providers/authenticationProvider.dart';
-import 'package:firebase_core/firebase_core.dart';
+//import 'package:firebase_core/firebase_core.dart';
 
 
 
 
-void main()async {
-   WidgetsFlutterBinding.ensureInitialized();
-
-  await Firebase.initializeApp();
-  // Pass all uncaught "fatal" errors from the framework to Crashlytics
-  FlutterError.onError = FirebaseCrashlytics.instance.recordFlutterFatalError;
+void main() {
+  
+  
   
   runApp(
     MultiProvider(
