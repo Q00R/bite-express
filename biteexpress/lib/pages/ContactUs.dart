@@ -1,3 +1,4 @@
+import 'package:biteexpress/main.dart';
 import 'package:flutter/material.dart';
 
 class ContactUsApp extends StatelessWidget {
@@ -20,6 +21,18 @@ class ContactUsPage extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: Text('Contact Us'),
+        leading: IconButton(
+          icon: Icon(Icons.arrow_back),
+          onPressed: () {
+            Navigator.pop(
+              context,
+            );
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => MainAppScaffold()),
+            );
+          },
+        ),
       ),
       body: Padding(
         padding: const EdgeInsets.all(20.0),

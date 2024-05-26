@@ -1,3 +1,4 @@
+import 'package:biteexpress/main.dart';
 import 'package:flutter/material.dart';
 
 class FAQApp extends StatelessWidget {
@@ -48,6 +49,18 @@ class FAQPage extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: Text('FAQ'),
+        leading: IconButton(
+          icon: Icon(Icons.arrow_back),
+          onPressed: () {
+            Navigator.pop(
+              context,
+            );
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => MainAppScaffold()),
+            );
+          },
+        ),
       ),
       body: ListView.builder(
         itemCount: faqs.length,
