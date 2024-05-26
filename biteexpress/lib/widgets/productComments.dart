@@ -14,6 +14,13 @@ class ProductComments extends StatefulWidget {
 
 class _ProductCommentsState extends State<ProductComments> {
   @override
+  void initState() {
+    super.initState();
+    final provider = Provider.of<ProductProvider>(context, listen: false);
+    provider.fetchProducts();
+  }
+
+  @override
   Widget build(BuildContext context) {
     final productProvider = Provider.of<ProductProvider>(context);
 
@@ -28,9 +35,11 @@ class _ProductCommentsState extends State<ProductComments> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        const Text(
-          'PRODUCT REVIEWS',
-          style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+        const Center(
+          child: Text(
+            'PRODUCT REVIEWS',
+            style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+          ),
         ),
         const SizedBox(height: 10),
         ...comments.entries.map((entry) {
@@ -38,18 +47,15 @@ class _ProductCommentsState extends State<ProductComments> {
           final userFullName =
               '${commentData['firstName']} ${commentData['lastName']}';
           final comment = commentData['comment'];
-          return Padding(
-            padding: const EdgeInsets.symmetric(vertical: 5.0),
-            child: Row(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  '$userFullName: ',
-                  style: const TextStyle(fontWeight: FontWeight.bold),
-                ),
-                Expanded(child: Text(comment ?? '')),
-              ],
+          return ListTile(
+            leading: CircleAvatar(
+              child: Icon(Icons.person),
             ),
+            title: Text(
+              userFullName,
+              style: TextStyle(fontWeight: FontWeight.bold),
+            ),
+            subtitle: Text(comment!),
           );
         }).toList(),
       ],
