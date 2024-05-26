@@ -1,4 +1,5 @@
 import 'package:biteexpress/classes/user.dart';
+import 'package:biteexpress/main.dart';
 import 'package:biteexpress/providers/authenticationProvider.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -87,11 +88,18 @@ class MorePage extends StatelessWidget {
                     // Add navigation logic for Settings
                   },
                 ),
-                _buildNavigationItem(
-                  text: 'Sign Out',
-                  icon: Icons.exit_to_app,
-                  onTap: () {},
-                ),
+_buildNavigationItem(
+  text: 'Sign Out',
+  icon: Icons.exit_to_app,
+  onTap: () async {
+    final authProvider = Provider.of<AuthenticationProvider>(context, listen: false);
+    await authProvider.signOut();
+    Navigator.pushReplacement(
+      context,
+      MaterialPageRoute(builder: (context) => MainAppScaffold()),
+    );
+  },
+),
               ],
             ),
           );
