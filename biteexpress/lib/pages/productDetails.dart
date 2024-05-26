@@ -4,7 +4,6 @@ import '../classes/product.dart';
 import '../widgets/productInfo.dart';
 import '../widgets/productComments.dart';
 import '../classes/Cart.dart';
-import '../providers/authenticationProvider.dart';
 
 class ProductDetailsPage extends StatefulWidget {
   final Product product;
@@ -36,7 +35,6 @@ class _ProductDetailsPageState extends State<ProductDetailsPage> {
   @override
   Widget build(BuildContext context) {
     final cart = context.watch<Cart>();
-    final authProvider = context.watch<AuthenticationProvider>();
 
     return DefaultTabController(
       length: 2,
@@ -83,11 +81,11 @@ class _ProductDetailsPageState extends State<ProductDetailsPage> {
                       ],
                     ),
                   ),
-                  SingleChildScrollView(
+                  const SingleChildScrollView(
                     child: Column(
                       mainAxisSize: MainAxisSize.min,
                       children: [
-                        ProductComments(product: widget.product),
+                        ProductComments(),
                       ],
                     ),
                   ),
@@ -96,46 +94,44 @@ class _ProductDetailsPageState extends State<ProductDetailsPage> {
             ),
           ],
         ),
-        floatingActionButton: authProvider.isAuthenticated
-            ? Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Container(
-                  color: const Color.fromARGB(
-                      255, 255, 102, 0), // Orange background
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    children: [
-                      if (_quantity > 0)
-                        IconButton(
-                          onPressed: () {
-                            cart.removeFromCart(widget.product);
-                            setState(() {
-                              _quantity = cart.getQuantity(widget.product);
-                            });
-                            _showSnackBar('Product removed from cart');
-                          },
-                          icon: const Icon(Icons.remove, color: Colors.white),
-                        ),
-                      Text(
-                        '$_quantity',
-                        style:
-                            const TextStyle(fontSize: 18, color: Colors.white),
-                      ),
-                      IconButton(
-                        onPressed: () {
-                          cart.addToCart(widget.product);
-                          setState(() {
-                            _quantity = cart.getQuantity(widget.product);
-                          });
-                          _showSnackBar('Product added to cart');
-                        },
-                        icon: const Icon(Icons.add, color: Colors.white),
-                      ),
-                    ],
+        floatingActionButton: Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Container(
+            color: const Color.fromARGB(255, 255, 102, 0), // Orange background
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: [
+                if (_quantity > 0)
+                  IconButton(
+                    onPressed: () {
+                      cart.removeFromCart(widget.product);
+                      setState(() {
+                        _quantity = cart.getQuantity(widget.product);
+                      });
+                      _showSnackBar('Product removed from cart');
+                    },
+                    icon: const Icon(Icons.remove, color: Colors.white),
                   ),
+                Text(
+                  '$_quantity',
+                  style: const TextStyle(
+                    fontSize: 18,
+                    color: Colors.white),
                 ),
-              )
-            : null, // Set FloatingActionButton to null if not authenticated
+                IconButton(
+                  onPressed: () {
+                    cart.addToCart(widget.product);
+                    setState(() {
+                      _quantity = cart.getQuantity(widget.product);
+                    });
+                    _showSnackBar('Product added to cart');
+                  },
+                  icon: const Icon(Icons.add, color: Colors.white),
+                ),
+              ],
+            ),
+          ),
+        ),
         floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
       ),
     );
@@ -144,7 +140,7 @@ class _ProductDetailsPageState extends State<ProductDetailsPage> {
 
 const _tabs = [
   Tab(icon: Icon(Icons.info), text: "Product Info"),
-  Tab(icon: Icon(Icons.comment), text: "Reviews"),
+  Tab(icon: Icon(Icons.comment), text: "Comments"),
 ];
 
 class _SliverAppBarDelegate extends SliverPersistentHeaderDelegate {

@@ -1,11 +1,10 @@
 import 'package:awesome_notifications/awesome_notifications.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
-import '../classes/product.dart';
-import '../providers/ProductsProvider.dart';
+import '../providers/addProductsProvider.dart';
 
-class AddProduct extends StatelessWidget {
+class addProduct extends StatelessWidget {
+
   @override
   Widget build(BuildContext context) {
     
@@ -39,11 +38,6 @@ class AddProduct extends StatelessWidget {
         ),
         home: Scaffold(
           appBar: AppBar(
-            leading: BackButton(
-              onPressed: () {
-                Navigator.of(context).pop();
-              },
-            ),
             title: const Text('Add Product'),
           ),
           body: Padding(
@@ -118,13 +112,13 @@ class AddProduct extends StatelessWidget {
                       TextFormField(
                         controller: provider.priceController,
                         decoration: const InputDecoration(labelText: 'Price'),
-                        inputFormatters: <TextInputFormatter>[
-                          FilteringTextInputFormatter.allow(
-                              RegExp(r'^\d+\.?\d{0,2}')),
-                        ],
+                        keyboardType: TextInputType.number,
                         validator: (value) {
                           if (value == null || value.isEmpty) {
                             return 'Please enter a price';
+                          }
+                          if (double.tryParse(value) == null) {
+                            return 'Please enter a valid number';
                           }
                           return null;
                         },
@@ -142,7 +136,7 @@ class AddProduct extends StatelessWidget {
                         ),
                       const SizedBox(height: 20),
                       ElevatedButton(
-                        onPressed: () async {
+                        onPressed: () {
                             triggerNotification(  String
          message) {
     AwesomeNotifications().createNotification(
@@ -151,17 +145,10 @@ class AddProduct extends StatelessWidget {
   }
   triggerNotification('Product  has been created    successfully  !');
                           if (provider.validateForm()) {
-                            Product newProduct = provider.createProduct();
-                            await provider.addProductToDatabase(newProduct);
-                            ScaffoldMessenger.of(context).showSnackBar(
-                                const SnackBar(
-                                    content:
-                                        Text('Product added successfully!')));
-                            // Optionally navigate to another screen or clear the form
+                            final product = provider.createProduct();
+                            // Handle the product data (e.g., save to a database or navigate to another screen)
                           } else {
-                            ScaffoldMessenger.of(context).showSnackBar(
-                                const SnackBar(
-                                    content: Text('Please fill all fields')));
+                            // Show validation error
                           }
                         },
                         child: const Text(

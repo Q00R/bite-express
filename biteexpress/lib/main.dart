@@ -3,7 +3,6 @@ import 'package:biteexpress/notifications/firebase_notifications.dart';
 import 'package:biteexpress/notifications/firebase_options.dart';
 import 'package:biteexpress/notifications/local_notf.dart';
 import 'package:firebase_core/firebase_core.dart';
-import 'package:biteexpress/pages/MorePage.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import './pages/home.dart';
@@ -11,12 +10,10 @@ import './pages/search.dart';
 import './pages/addProduct.dart';
 import './widgets/bottomNavigation.dart';
 import './providers/productsProvider.dart';
-import './classes/Cart.dart';
+import './classes/Cart.dart';  // Import the Cart class
 import './pages/cartPage.dart';
-import './pages/Signup.dart';
-import './pages/SignIn.dart';
-import './providers/authenticationProvider.dart';
-
+//import 'package:firebase_core/firebase_core.dart';
+//import 'firebase_options.dart';
 
 Future<void> main () async {
 // WidgetsFlutterBinding.ensureInitialized();
@@ -39,8 +36,7 @@ AwesomeNotifications().initialize(
     MultiProvider(
       providers: [
         ChangeNotifierProvider(create: (_) => ProductProvider()),
-        ChangeNotifierProvider(create: (_) => Cart()),
-        ChangeNotifierProvider(create: (_) => AuthenticationProvider()),
+        ChangeNotifierProvider<Cart>(create: (_) => Cart()),  // Add Cart provider
       ],
       child: const MyApp(),
     ),
@@ -60,17 +56,19 @@ class MyApp extends StatelessWidget {
             seedColor: const Color.fromARGB(255, 255, 115, 1)),
         useMaterial3: true,
       ),
-      home: MainAppScaffold(), // Set HomePage as the initial screen
+      home: const ParentWidget(),
     );
   }
 }
 
-class MainAppScaffold extends StatefulWidget {
+class ParentWidget extends StatefulWidget {
+  const ParentWidget({Key? key}) : super(key: key);
+
   @override
-  _MainAppScaffoldState createState() => _MainAppScaffoldState();
+  State<ParentWidget> createState() => _ParentWidgetState();
 }
 
-class _MainAppScaffoldState extends State<MainAppScaffold> {
+class _ParentWidgetState extends State<ParentWidget> {
   int _selectedIndex = 0;
 
   @override
@@ -78,7 +76,17 @@ class _MainAppScaffoldState extends State<MainAppScaffold> {
     return Scaffold(
       body: IndexedStack(
         index: _selectedIndex,
-        children: _buildPages(context),
+        children: [
+          HomePage(),
+          SearchPage(),
+          CartPage(),
+          Container(
+            child: Center(child: Text('More Page')),
+          )
+         ,
+          addProduct(),
+
+        ],
       ),
       bottomNavigationBar: BottomNavigation(
         selectedIndex: _selectedIndex,
@@ -89,24 +97,5 @@ class _MainAppScaffoldState extends State<MainAppScaffold> {
         },
       ),
     );
-  }
-
-  List<Widget> _buildPages(BuildContext context) {
-    final authProvider = Provider.of<AuthenticationProvider>(context);
-
-    if (authProvider.isAuthenticated) {
-      return [
-        HomePage(),
-        SearchPage(),
-        CartPage(),
-        MorePage(),
-      ];
-    } else {
-      return [
-        HomePage(),
-        SearchPage(),
-        SignInWidget(),
-      ];
-    }
   }
 }
