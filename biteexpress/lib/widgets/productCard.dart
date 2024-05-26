@@ -5,10 +5,11 @@ import '../classes/product.dart';
 import '../pages/productDetails.dart';
 
 class ProductCard extends StatelessWidget {
-  triggerNotification() {
+  triggerNotification(  String
+         message) {
     AwesomeNotifications().createNotification(
         content: NotificationContent(
-            id: 10, channelKey: "basic_channel", body: "New Product Added"));
+            id: 10, channelKey: "basic_channel", body: message, title: 'Bite Express'));
   }
   final Product product;
 
@@ -21,7 +22,7 @@ class ProductCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-triggerNotification();
+triggerNotification('Product: ${product.title} is added to cart!');
 
 
 
