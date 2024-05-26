@@ -246,6 +246,10 @@ class _ProductInfoState extends State<ProductInfo> {
                 productId: widget.product.productId,
                 subCategory: widget.product.subcategory,
               ),
+              const SizedBox(height: 100),
+              const Divider(
+                color: Colors.grey,
+              ),
             ],
           ),
         ),

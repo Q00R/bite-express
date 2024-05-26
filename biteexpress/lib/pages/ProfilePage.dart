@@ -1,7 +1,25 @@
+import 'package:biteexpress/classes/user.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart'; // Import Provider
+import 'package:biteexpress/providers/authenticationProvider.dart';
 
-class ProfilePage1 extends StatelessWidget {
+class ProfilePage1 extends StatefulWidget {
   const ProfilePage1({Key? key}) : super(key: key);
+
+  @override
+  _ProfilePage1State createState() => _ProfilePage1State();
+}
+
+class _ProfilePage1State extends State<ProfilePage1> {
+  late Future<User?> _userInfo;
+
+  @override
+  void initState() {
+    super.initState();
+    final authProvider =
+        Provider.of<AuthenticationProvider>(context, listen: false);
+    _userInfo = authProvider.getUserInfo();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -10,51 +28,57 @@ class ProfilePage1 extends StatelessWidget {
         title: const Text("Profile"),
         backgroundColor: const Color.fromARGB(255, 255, 153, 70),
       ),
-      body: const Column(
-        children: [
-          Expanded(flex: 2, child: _TopPortion()),
-          Expanded(
-            flex: 3,
-            child: Padding(
-              padding: EdgeInsets.all(8.0),
-              child: Column(
-                children: [
-                  Text(
-                    "Richie Lorie",
-                    style: TextStyle(
-                      fontSize: 24,
-                      fontWeight: FontWeight.bold,
+      body: FutureBuilder<User?>(
+        future: _userInfo,
+        builder: (context, snapshot) {
+          if (snapshot.connectionState == ConnectionState.waiting) {
+            return Center(child: CircularProgressIndicator());
+          } else if (snapshot.hasError) {
+            return Center(child: Text('Error: ${snapshot.error}'));
+          } else {
+            final user = snapshot.data;
+            return Column(
+              children: [
+                Expanded(flex: 2, child: _TopPortion()),
+                Expanded(
+                  flex: 3,
+                  child: Padding(
+                    padding: EdgeInsets.all(8.0),
+                    child: Column(
+                      children: [
+                        Text(
+                          "${user?.firstname} ${user?.lastname}",
+                          style: TextStyle(
+                            fontSize: 24,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                        SizedBox(height: 16),
+                        Column(
+                          children: <Widget>[
+                            ListTile(
+                              leading: Icon(Icons.email),
+                              title: Text('Email'),
+                              subtitle: Text(user?.email ?? 'No Email'),
+                            ),
+                            ListTile(
+                              leading: Icon(Icons.phone),
+                              title: Text('Phone'),
+                              subtitle: Text(user?.phone ?? 'No Phone'),
+                            ),
+                          ],
+                        ),
+                      ],
                     ),
                   ),
-                  SizedBox(height: 16),
-                  Column(
-                    children: <Widget>[
-                      ListTile(
-                        leading: Icon(Icons.email),
-                        title: Text('Email'),
-                        subtitle: Text('user@example.com'),
-                      ),
-                      ListTile(
-                        leading: Icon(Icons.phone),
-                        title: Text('Phone'),
-                        subtitle: Text('123-456-7890'),
-                      ),
-                    ],
-                  ),
-                ],
-              ),
-            ),
-          ),
-        ],
+                ),
+              ],
+            );
+          }
+        },
       ),
     );
   }
-}
-
-class ProfileInfoItem {
-  final String title;
-  final int value;
-  const ProfileInfoItem(this.title, this.value);
 }
 
 class _TopPortion extends StatelessWidget {
