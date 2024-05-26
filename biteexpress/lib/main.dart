@@ -18,9 +18,10 @@ import './providers/authenticationProvider.dart';
 
 
 void main() {
-  
-  
-  
+  // WidgetsFlutterBinding.ensureInitialized();
+  // await Firebase.initializeApp();
+  // FirebaseCrashlytics.instance.setCrashlyticsCollectionEnabled(true);
+  // FlutterError.onError = FirebaseCrashlytics.instance.recordFlutterError;
   runApp(
     MultiProvider(
       providers: [
