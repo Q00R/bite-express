@@ -80,6 +80,7 @@ class _ProductDetailsPageState extends State<ProductDetailsPage> {
                       mainAxisSize: MainAxisSize.min,
                       children: [
                         ProductInfo(product: widget.product),
+                        const SizedBox(height: 300)
                       ],
                     ),
                   ),
