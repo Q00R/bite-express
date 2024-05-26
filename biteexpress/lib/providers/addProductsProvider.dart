@@ -70,7 +70,7 @@ class ProductProvider with ChangeNotifier {
         image: "test",
         category: _selectedCategory!,
         subcategory: _selectedSubcategory!,
-        // price: double.parse(_priceController.text),
-        price: "a");
+        price: double.parse(_priceController.text),
+      );
   }
 }
