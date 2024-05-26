@@ -1,7 +1,8 @@
 import 'package:biteexpress/pages/ContactUs.dart';
+import 'package:biteexpress/pages/FAQ.dart';
 import 'package:flutter/material.dart';
 import './ProfilePage.dart';
-import 'addProduct.dart'; // Import the AddProductPage
+import 'addProduct.dart';
 
 class MorePage extends StatelessWidget {
   @override
@@ -50,10 +51,13 @@ class MorePage extends StatelessWidget {
             },
           ),
           _buildNavigationItem(
-            text: 'Help',
+            text: 'FAQ',
             icon: Icons.help_center,
             onTap: () {
-              // Add sign out logic
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => FAQApp()),
+              );
             },
           ),
           _buildNavigationItem(
