@@ -100,17 +100,19 @@ class CartPage extends StatelessWidget {
             if (totalPrice > 0) // Only show buttons when total price is greater than 0
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 16.0),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: [
                     Text(
                       'Total Price: \$${totalPrice.toStringAsFixed(2)}',
                       style: TextStyle(
-                        fontSize: 20,
+                        fontSize: 16,
                         fontWeight: FontWeight.bold,
                       ),
                     ),
+                    SizedBox(height: 8),
                     Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         ElevatedButton(
                           onPressed: () {

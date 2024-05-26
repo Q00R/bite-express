@@ -60,7 +60,7 @@ class MorePage extends StatelessWidget {
             },
           ),
           _buildNavigationItem(
-            text: 'Contacy Us',
+            text: 'Contact Us',
             icon: Icons.contact_emergency,
             onTap: () {
               // Add sign out logic
