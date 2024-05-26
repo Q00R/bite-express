@@ -37,6 +37,11 @@ class AddProduct extends StatelessWidget {
         ),
         home: Scaffold(
           appBar: AppBar(
+            leading: BackButton(
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            ),
             title: const Text('Add Product'),
           ),
           body: Padding(
