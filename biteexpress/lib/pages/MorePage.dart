@@ -1,3 +1,4 @@
+import 'package:biteexpress/pages/AboutUs.dart';
 import 'package:biteexpress/pages/ContactUs.dart';
 import 'package:biteexpress/pages/FAQ.dart';
 import 'package:flutter/material.dart';
@@ -21,13 +22,6 @@ class MorePage extends StatelessWidget {
                 context,
                 MaterialPageRoute(builder: (context) => ProfilePage1()),
               );
-            },
-          ),
-          _buildNavigationItem(
-            text: 'Settings',
-            icon: Icons.settings,
-            onTap: () {
-              // Add navigation logic for Settings
             },
           ),
           _buildNavigationItem(
@@ -61,10 +55,20 @@ class MorePage extends StatelessWidget {
             },
           ),
           _buildNavigationItem(
-            text: 'About',
+            text: 'About Us',
             icon: Icons.info,
             onTap: () {
-              // Add sign out logic
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => AboutPage()),
+              );
+            },
+          ),
+          _buildNavigationItem(
+            text: 'Settings',
+            icon: Icons.settings,
+            onTap: () {
+              // Add navigation logic for Settings
             },
           ),
           _buildNavigationItem(
