@@ -2,8 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../classes/Cart.dart';
 import '../classes/product.dart';
+import 'package:square_in_app_payments/models.dart';
+import 'package:square_in_app_payments/in_app_payments.dart';
 
 enum PaymentType { cash, card } // Define PaymentType enum here
+
+
 
 class CheckoutPage extends StatefulWidget {
   @override
@@ -11,6 +15,48 @@ class CheckoutPage extends StatefulWidget {
 }
 
 class _CheckoutPageState extends State<CheckoutPage> {
+
+void _pay() {
+
+  print('Payment initiated');
+  try {
+
+    InAppPayments.setSquareApplicationId('sandbox-sq0idb-o6aUi04KTMQqMHAfOEc9QA');
+    print("tamam");
+    InAppPayments.startCardEntryFlow(
+      onCardNonceRequestSuccess: _cardNonceRequestSuccess,
+      onCardEntryCancel: _cardEntryCancel,
+    );
+  } catch (e) {
+    print('Error initiating payment: $e');
+    // Optionally, you can show a snackbar or dialog to notify the user about the error.
+  }
+}
+
+
+  void _cardNonceRequestSuccess(CardDetails result) {
+    // Use this nonce from your backend to pay
+    print(result.nonce);
+    InAppPayments.completeCardEntry(
+      onCardEntryComplete: _cardEntryComplete,
+    );
+  }
+
+  void _cardEntryCancel() {
+
+    // snack bar that says cancelled
+    ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+      content: Text('Payment Cancelled'),
+      duration: Duration(seconds: 2),
+    ));
+  }
+  void _cardEntryComplete() {
+    // snack bar that says success
+    ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+      content: Text('Payment Successful'),
+      duration: Duration(seconds: 2),
+    ));
+  }
   PaymentType? _paymentType = PaymentType.cash; // Default payment type is cash
   bool _showPaymentDetails = false; // Flag to control the visibility of payment details widget
 
@@ -103,7 +149,7 @@ class _CheckoutPageState extends State<CheckoutPage> {
                 style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
               ),
               ListTile(
-                title: Text('Cash'),
+                title: Icon(Icons.money),
                 leading: Radio(
                   value: PaymentType.cash,
                   groupValue: _paymentType,
@@ -111,12 +157,14 @@ class _CheckoutPageState extends State<CheckoutPage> {
                     setState(() {
                       _paymentType = value;
                       _showPaymentDetails = false; // Hide payment details widget when switching payment type
+                      // snack bar that says order placed 
+                      
                     });
                   },
                 ),
               ),
               ListTile(
-                title: Text('Card'),
+                title: Icon(Icons.credit_card),
                 leading: Radio(
                   value: PaymentType.card,
                   groupValue: _paymentType,
@@ -136,12 +184,18 @@ class _CheckoutPageState extends State<CheckoutPage> {
                 child: ElevatedButton(
                   onPressed: () {
                     if (_paymentType == PaymentType.cash) {
-                      // Place order logic for cash payment
+                      // snack bar that says order placed
+                      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                        content: Text('Order Placed'),
+                        duration: Duration(seconds: 2),
+                      ));
+                      cart.clearCart();
                     } else if (_paymentType == PaymentType.card) {
-                      // Show payment details widget for card payment
-                      setState(() {
-                        _showPaymentDetails = true;
-                      });
+
+                      _pay();
+// \                      setState(() {
+//                         _showPaymentDetails = true;
+//                       });
                     }
                   },
                   style: ElevatedButton.styleFrom(
