@@ -2,26 +2,38 @@ import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import '../classes/product.dart';
 import './relatedProductsList.dart';
+import '../providers/productsProvider.dart';
+import 'package:provider/provider.dart';
+import '../providers/authenticationProvider.dart';
 
-class ProductInfo extends StatelessWidget {
+class ProductInfo extends StatefulWidget {
   final Product product;
   const ProductInfo({Key? key, required this.product}) : super(key: key);
 
+  @override
+  _ProductInfoState createState() => _ProductInfoState();
+}
+
+class _ProductInfoState extends State<ProductInfo> {
+  final TextEditingController _commentController = TextEditingController();
+  double _rating = 0;
+
   double calculateAverageRating() {
-    if (product.ratings.isEmpty) {
-      return 1.0;
+    if (widget.product.ratings.isEmpty) {
+      return 0;
     }
-    int total = 0;
-    product.ratings.values.forEach((rating) {
-      total += rating.toInt();
+    double total = 0;
+    widget.product.ratings.values.forEach((rating) {
+      total += rating.toDouble();
     });
-    return (total / product.ratings.length).roundToDouble();
+    return (total / widget.product.ratings.length);
   }
 
   @override
   Widget build(BuildContext context) {
-    return ListView(
-      shrinkWrap: true,
+    final authProvider = context.watch<AuthenticationProvider>();
+
+    return Column(
       children: [
         Padding(
           padding: const EdgeInsets.all(20.0),
@@ -34,7 +46,7 @@ class ProductInfo extends StatelessWidget {
                 children: [
                   Flexible(
                     child: Text(
-                      product.title,
+                      widget.product.title,
                       style: const TextStyle(
                         fontSize: 20,
                         fontWeight: FontWeight.bold,
@@ -44,7 +56,7 @@ class ProductInfo extends StatelessWidget {
                   Align(
                     alignment: Alignment.topRight,
                     child: Text(
-                      'EGP ${product.price}',
+                      'EGP ${widget.product.price}',
                       style: const TextStyle(
                         fontSize: 18,
                         color: Color.fromARGB(255, 255, 85, 0),
@@ -61,7 +73,7 @@ class ProductInfo extends StatelessWidget {
                   Align(
                     alignment: Alignment.centerLeft,
                     child: Text(
-                      'Vendor: ${product.createdVendor}',
+                      'Vendor: ${widget.product.createdVendor}',
                       style: const TextStyle(
                         fontSize: 16,
                         fontWeight: FontWeight.normal,
@@ -101,7 +113,7 @@ class ProductInfo extends StatelessWidget {
                 child: Align(
                   alignment: Alignment.topLeft,
                   child: Text(
-                    product.description,
+                    widget.product.description,
                     style: const TextStyle(
                       fontSize: 16,
                       fontWeight: FontWeight.normal,
@@ -132,7 +144,6 @@ class ProductInfo extends StatelessWidget {
                   initialRating: calculateAverageRating(),
                   minRating: 1,
                   direction: Axis.horizontal,
-                  allowHalfRating: true,
                   itemCount: 5,
                   ignoreGestures: true,
                   itemPadding: const EdgeInsets.symmetric(horizontal: 4.0),
@@ -145,10 +156,80 @@ class ProductInfo extends StatelessWidget {
                   },
                 ),
               ),
-              const SizedBox(height: 10),
-              const Divider(
-                color: Colors.grey,
-              ),
+              const Divider(color: Colors.grey),
+              if (authProvider.isAuthenticated)
+                Column(
+                  children: [
+                    const SizedBox(height: 10),
+                    const Align(
+                      alignment: Alignment.centerLeft,
+                      child: Text(
+                        'Rate and Review',
+                        style: TextStyle(
+                          fontSize: 18,
+                          color: Colors.black,
+                          fontWeight: FontWeight.w500,
+                        ),
+                      ),
+                    ),
+                    const SizedBox(height: 10),
+                    RatingBar.builder(
+                      initialRating: 0,
+                      minRating: 1,
+                      direction: Axis.horizontal,
+                      allowHalfRating: true,
+                      itemCount: 5,
+                      itemBuilder: (context, _) => const Icon(
+                        Icons.star,
+                        color: Colors.amber,
+                      ),
+                      onRatingUpdate: (rating) {
+                        setState(() {
+                          _rating = rating;
+                        });
+                      },
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(vertical: 8.0),
+                      child: TextFormField(
+                        controller: _commentController,
+                        maxLines: null,
+                        keyboardType: TextInputType.multiline,
+                        decoration: const InputDecoration(
+                          hintText: 'Write your review here...',
+                          border: OutlineInputBorder(
+                            borderSide: BorderSide(color: Colors.orange),
+                          ),
+                        ),
+                      ),
+                    ),
+                    ElevatedButton(
+                      onPressed: () {
+                        final comment = _commentController.text;
+                        if (comment.isNotEmpty) {
+                          Provider.of<ProductProvider>(context, listen: false)
+                              .addCommentToProduct(
+                            widget.product,
+                            comment,
+                            _rating,
+                          );
+                          _commentController.clear();
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            const SnackBar(
+                              content:
+                                  Text('Review and Rating added successfully!'),
+                            ),
+                          );
+                        }
+                      },
+                      child: const Text('Submit Review'),
+                    ),
+                    const SizedBox(height: 10),
+                    const Divider(
+                      color: Colors.grey,
+                    ),
+                  ],
+                ),
               const SizedBox(height: 10),
               const Align(
                 alignment: Alignment.centerLeft,
@@ -162,64 +243,8 @@ class ProductInfo extends StatelessWidget {
                 ),
               ),
               RelatedProductsList(
-                productId: product.productId,
-                subCategory: product.subcategory,
-              ),
-              // "Rate and Comment" section
-              const Divider(color: Colors.grey),
-              const SizedBox(height: 10),
-              const Align(
-                alignment: Alignment.centerLeft,
-                child: Text(
-                  'Rate and Comment',
-                  style: TextStyle(
-                    fontSize: 18,
-                    color: Colors.black,
-                    fontWeight: FontWeight.w500,
-                  ),
-                ),
-              ),
-              const SizedBox(height: 10),
-              // Rating Bar
-              RatingBar.builder(
-                initialRating: 0,
-                minRating: 1,
-                direction: Axis.horizontal,
-                allowHalfRating: true,
-                itemCount: 5,
-                itemBuilder: (context, _) => const Icon(
-                  Icons.star,
-                  color: Colors.amber,
-                ),
-                onRatingUpdate: (rating) {
-                  // Handle rating update
-                  print(rating);
-                },
-              ),
-              // Comment Text Field
-              Padding(
-                padding: const EdgeInsets.symmetric(vertical: 8.0),
-                child: TextFormField(
-                  maxLines: null,
-                  keyboardType: TextInputType.multiline,
-                  decoration: const InputDecoration(
-                    hintText: 'Write your comment here...',
-                    border: OutlineInputBorder(
-                      borderSide: BorderSide(color: Colors.orange),
-                    ),
-                  ),
-                ),
-              ),
-              // Submit Button
-              ElevatedButton(
-                onPressed: () {
-                  // Handle comment submission
-                },
-                style: ElevatedButton.styleFrom(
-                  foregroundColor: Colors.white,
-                  backgroundColor: const Color.fromARGB(255, 255, 102, 0),
-                ),
-                child: const Text('Submit'),
+                productId: widget.product.productId,
+                subCategory: widget.product.subcategory,
               ),
             ],
           ),
