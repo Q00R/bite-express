@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 
 class ProductComments extends StatelessWidget {
-  
   const ProductComments({super.key});
 
   @override

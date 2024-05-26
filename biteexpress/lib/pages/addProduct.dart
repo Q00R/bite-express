@@ -1,13 +1,10 @@
-import 'package:awesome_notifications/awesome_notifications.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../providers/addProductsProvider.dart';
 
 class addProduct extends StatelessWidget {
-
   @override
   Widget build(BuildContext context) {
-    
     return ChangeNotifierProvider(
       create: (context) => ProductProvider(),
       child: MaterialApp(
@@ -137,13 +134,6 @@ class addProduct extends StatelessWidget {
                       const SizedBox(height: 20),
                       ElevatedButton(
                         onPressed: () {
-                            triggerNotification(  String
-         message) {
-    AwesomeNotifications().createNotification(
-        content: NotificationContent(
-            id: 10, channelKey: "basic_channel", body: message, title: 'Bite Express'));
-  }
-  triggerNotification('Product  has been created    successfully  !');
                           if (provider.validateForm()) {
                             final product = provider.createProduct();
                             // Handle the product data (e.g., save to a database or navigate to another screen)
