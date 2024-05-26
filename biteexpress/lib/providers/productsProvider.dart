@@ -333,6 +333,28 @@ class ProductProvider extends ChangeNotifier {
     }
   }
 
+  // Get comments of a product by id
+  Map<String, Map<String, String>> getCommentsById(String productId) {
+    Product product = _products.firstWhere(
+        (product) => product.productId == productId,
+        orElse: () => Product(
+            productId: '0',
+            title: 'No product found',
+            description: 'No product found',
+            category: 'No product found',
+            subcategory: 'No product found',
+            price: 0.0,
+            createdVendor: 'No product found',
+            image: 'No product found',
+            ratings: {},
+            comments: {}));
+    print('STARTTT');
+    print(product.comments);
+    print('ENDDD');
+
+    return product.comments;
+  }
+
   Future<User?> fetchUserInfo() async {
     User? user = await authProvider.getUserInfo();
     if (user != null) {
