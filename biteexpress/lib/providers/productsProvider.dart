@@ -97,7 +97,8 @@ class ProductProvider extends ChangeNotifier {
           price: double.parse(productData['price'].toString()),
           createdVendor: productData['createdVendor'],
           image: productData['image'],
-          ratings: ratings.map((key, value) => MapEntry(key, value ?? 0)),
+          ratings: ratings.map((key, value) =>
+              MapEntry(key, int.tryParse(value.toString()) ?? 0)),
           comments: comments.map(
               (key, value) => MapEntry(key, Map<String, String>.from(value))),
         ));
@@ -330,6 +331,28 @@ class ProductProvider extends ChangeNotifier {
     } catch (error) {
       print("Error adding comment: $error");
     }
+  }
+
+  // Get comments of a product by id
+  Map<String, Map<String, String>> getCommentsById(String productId) {
+    Product product = _products.firstWhere(
+        (product) => product.productId == productId,
+        orElse: () => Product(
+            productId: '0',
+            title: 'No product found',
+            description: 'No product found',
+            category: 'No product found',
+            subcategory: 'No product found',
+            price: 0.0,
+            createdVendor: 'No product found',
+            image: 'No product found',
+            ratings: {},
+            comments: {}));
+    print('STARTTT');
+    print(product.comments);
+    print('ENDDD');
+
+    return product.comments;
   }
 
   Future<User?> fetchUserInfo() async {
